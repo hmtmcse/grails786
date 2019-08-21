@@ -1,2 +1,11 @@
 rootProject.name = 'Grails786'
 
+
+
+File systemModules = file('system-modules/')
+if (systemModules.exists()){
+    systemModules.list().each {
+        include(it)
+        project(":${it}").projectDir = file("system-modules/${it}")
+    }
+}

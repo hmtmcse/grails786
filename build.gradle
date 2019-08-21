@@ -1,3 +1,5 @@
+import org.ajoberstar.grgit.Grgit
+
 buildscript {
     repositories {
         maven { url "https://repo.grails.org/grails/core" }
@@ -7,13 +9,14 @@ buildscript {
         classpath "org.grails.plugins:hibernate5:7.0.0"
         classpath "gradle.plugin.com.github.erdi.webdriver-binaries:webdriver-binaries-gradle-plugin:2.0"
         classpath "com.bertramlabs.plugins:asset-pipeline-gradle:3.0.10"
+        classpath 'org.ajoberstar.grgit:grgit-core:3.0.0'
     }
 }
 
 version "0.1"
 group "grails786"
 
-apply plugin:"eclipse"
+
 apply plugin:"idea"
 apply plugin:"war"
 apply plugin:"org.grails.grails-web"
@@ -32,7 +35,24 @@ configurations {
     }
 }
 
+File systemModules = file('system-modules/')
+grails {
+    plugins {
+        
+        if (systemModules.exists()){
+            systemModules.list().each {
+                compile project(":${it}")
+            }
+        }
+    }
+}
+
 dependencies {
+    
+//    External Dependency
+    compile 'org.ajoberstar.grgit:grgit-core:3.0.0'
+    
+    
     developmentOnly("org.springframework.boot:spring-boot-devtools")
     compile "org.springframework.boot:spring-boot-starter-logging"
     compile "org.springframework.boot:spring-boot-autoconfigure"
@@ -100,4 +120,26 @@ tasks.withType(Test) {
 assets {
     minifyJs = true
     minifyCss = true
+}
+
+
+def systemDependencyList = [
+        "grails-swagger": "https://github.com/hmtmcse/grails-swagger.git"
+]
+
+task resolveSystemDependency {
+    
+    doLast {
+        systemDependencyList.each { name, url ->
+            println("------------------------------------------------------------------------------------------")
+            def destination = file("system-modules/${name}")
+            try{
+                println("Cloning Project ${name}")
+                Grgit.clone(dir: destination, uri: url)
+            }catch(Exception e){
+                println(e.getMessage())
+            }
+            println("------------------------------------------------------------------------------------------\n")
+        }
+    }
 }
