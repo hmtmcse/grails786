@@ -1,4 +1,4 @@
-package saas
+package com.hmtmcse.saas
 
 class UrlMappings {
 
@@ -10,7 +10,7 @@ class UrlMappings {
         }
 
         "/"(view:"/index")
-        "500"(view:'/error')
+        "500"(controller: 'exception', action: "error500")
         "404"(view:'/notFound')
     }
 }
