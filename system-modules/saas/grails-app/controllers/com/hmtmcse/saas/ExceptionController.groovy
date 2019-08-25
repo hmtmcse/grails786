@@ -14,4 +14,8 @@ class ExceptionController {
     }
 
     def error404() {}
+
+    def error() {
+        render("Error")
+    }
 }

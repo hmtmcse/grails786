@@ -10,7 +10,6 @@ class SaasGrailsPlugin extends Plugin {
         "grails-app/views/error.gsp"
     ]
 
-    // TODO Fill in these fields
     def title = "SaaS"
     def author = "H.M.Touhid Mia"
     def authorEmail = "hmtm.cse@gmail.com"

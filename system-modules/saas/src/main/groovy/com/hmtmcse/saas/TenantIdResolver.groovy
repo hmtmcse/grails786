@@ -1,6 +1,7 @@
 package com.hmtmcse.saas
 
 import groovy.transform.CompileStatic
+import org.grails.datastore.mapping.core.connections.ConnectionSource
 import org.grails.datastore.mapping.multitenancy.TenantResolver
 import org.grails.datastore.mapping.multitenancy.exceptions.TenantNotFoundException
 import org.springframework.web.context.request.RequestAttributes
@@ -38,6 +39,9 @@ class TenantIdResolver implements TenantResolver {
 
     @Override
     Serializable resolveTenantIdentifier() throws TenantNotFoundException {
+        if (!TenantContext.tenantInfo.size()){
+            return ConnectionSource.DEFAULT
+        }
         String tenantIdentity = getTenantIdentity()
         if (!tenantIdentity || !TenantContext.tenantInfo.get(tenantIdentity)) {
             throw new TenantNotFoundException(MESSAGE)

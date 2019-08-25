@@ -5,7 +5,7 @@ class BootStrap {
     TenantProvisioningService tenantProvisioningService
 
     def init = { servletContext ->
-        if (ApplicationConfig.isEnableMultiTenant()) {
+        if (ApplicationConfig.isEnableMultiTenant() && false) {
             if (!TenantInfo.count()) {
                 [
                         [
