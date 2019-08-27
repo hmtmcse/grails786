@@ -33,8 +33,9 @@ class BootStrap {
                     tenantProvisioningService.addNewTenant(it)
                 }
             }
-            tenantProvisioningService.registerAllActiveTenant()
+
         }
+        tenantProvisioningService.registerAllActiveTenant()
     }
     def destroy = {
     }

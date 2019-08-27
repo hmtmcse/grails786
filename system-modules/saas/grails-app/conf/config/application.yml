@@ -1,10 +1,10 @@
-grails:
-  gorm:
-    multiTenancy:
-      mode: DATABASE # <1>
-      tenantResolverClass: com.hmtmcse.saas.TenantIdResolver # <2>
-    reactor:
-      events: false
+#grails:
+#  gorm:
+#    multiTenancy:
+#      mode: DATABASE # <1>
+#      tenantResolverClass: com.hmtmcse.saas.TenantIdResolver # <2>
+#    reactor:
+#      events: false
 
 
 hibernate:

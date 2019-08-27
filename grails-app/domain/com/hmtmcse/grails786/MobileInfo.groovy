@@ -8,6 +8,8 @@ class MobileInfo implements MultiTenant<MobileInfo> {
     String mobile
     String name
 
+    static hasMany = [operator: MobileOperator]
+
     static constraints = {
     }
 }
