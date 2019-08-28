@@ -43,6 +43,9 @@ class TenantIdResolver implements TenantResolver {
             return ConnectionSource.DEFAULT
         }
         String tenantIdentity = getTenantIdentity()
+        if (tenantIdentity.equals("localhost")){
+            return ConnectionSource.DEFAULT
+        }
         if (!tenantIdentity || !TenantContext.tenantInfo.get(tenantIdentity)) {
             throw new TenantNotFoundException(MESSAGE)
         }

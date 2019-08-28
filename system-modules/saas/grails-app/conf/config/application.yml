@@ -1,10 +1,10 @@
-#grails:
-#  gorm:
-#    multiTenancy:
-#      mode: DATABASE # <1>
-#      tenantResolverClass: com.hmtmcse.saas.TenantIdResolver # <2>
-#    reactor:
-#      events: false
+grails:
+  gorm:
+    multiTenancy:
+      mode: DATABASE # <1>
+      tenantResolverClass: com.hmtmcse.saas.TenantIdResolver # <2>
+    reactor:
+      events: false
 
 
 hibernate:
@@ -21,3 +21,11 @@ dataSource:
   password: "" # <1>
   dbCreate: update
   url: "jdbc:mysql://localhost/multi_tenant?useUnicode=yes&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC"
+
+#dataSources:
+#  tenant1:
+#    dbCreate: update
+#    url: "jdbc:mysql://localhost/tenant1?useUnicode=yes&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC"
+#  tenant2:
+#    dbCreate: update
+#    url: "jdbc:mysql://localhost/tenant2?useUnicode=yes&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC"

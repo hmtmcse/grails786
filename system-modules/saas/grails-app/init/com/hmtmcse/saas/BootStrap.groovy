@@ -5,7 +5,7 @@ class BootStrap {
     TenantProvisioningService tenantProvisioningService
 
     def init = { servletContext ->
-        if (ApplicationConfig.isEnableMultiTenant() && false) {
+        if (ApplicationConfig.isEnableMultiTenant()) {
             if (!TenantInfo.count()) {
                 [
                         [
@@ -13,21 +13,21 @@ class BootStrap {
                                 password    : "",
                                 host        : "localhost",
                                 username    : "root",
-                                tenantId    : "tenant1"
+                                tenantId    : "tenant1.hmtmcse.com"
                         ],
                         [
                                 databaseName: "tenant2",
                                 password    : "",
                                 host        : "localhost",
                                 username    : "root",
-                                tenantId    : "tenant2"
+                                tenantId    : "tenant2.hmtmcse.com"
                         ],
                         [
                                 databaseName: "tenant3",
                                 password    : "",
                                 host        : "localhost",
                                 username    : "root",
-                                tenantId    : "tenant3"
+                                tenantId    : "tenant3.hmtmcse.com"
                         ]
                 ].each {
                     tenantProvisioningService.addNewTenant(it)

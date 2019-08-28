@@ -12,6 +12,8 @@ class BismillahController {
     def index() {
         Datastore datastore = GormEnhancer.findSingleDatastore()
         Tenants.currentId()
+        println("test")
+        hibernateDatastore.disableMultiTenancyFilter()
 //        hibernateDatastore.getDatastoreForConnection("tenant1")
 //        Datastore datastorex = GormEnhancer.findDatastoreByType("tenant1")
         render("<h1>Grails Bismillahir Rahmanir Rahim</h1>")

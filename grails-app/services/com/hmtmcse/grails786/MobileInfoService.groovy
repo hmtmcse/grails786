@@ -11,4 +11,12 @@ class MobileInfoService {
         mobileInfo.save()
         println("save")
     }
+
+    def list() {
+        return MobileInfo.list()
+    }
+
+    def last() {
+        return MobileInfo.last()
+    }
 }
