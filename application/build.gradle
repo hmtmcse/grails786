@@ -1,0 +1,24 @@
+
+String applicationModuleGradlePath = "${rootProject.projectDir}/$applicationModuleGradlePath"
+Boolean isApplicationModulesAvailable = false
+if(new File(applicationModuleGradlePath).exists()) {
+    apply from: applicationModuleGradlePath
+    isApplicationModulesAvailable = true
+}
+
+version "1.0.0"
+group "com.hmtmcse.application"
+
+apply from: "${rootProject.projectDir}/gradle/codenarc.gradle"
+
+
+grails {
+    plugins {
+        compile project(':my-plugin')
+        if(isApplicationModulesAvailable) {
+            myPlugins().each {
+                compile project(":${it}")
+            }
+        }
+    }
+}

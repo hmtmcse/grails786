@@ -1,0 +1,9 @@
+apply plugin: 'groovy'
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+    compile 'org.codenarc:CodeNarc:1.4'
+}

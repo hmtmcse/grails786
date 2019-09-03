@@ -1,0 +1,14 @@
+apply plugin:"org.grails.grails-plugin"
+apply plugin:"org.grails.grails-plugin-publish"
+
+
+repositories {
+    mavenLocal()
+    maven { url "https://repo.grails.org/grails/core" }
+    maven { url "https://dl.bintray.com/hmtmcse/maven/" }
+    maven { url "http://central.maven.org/maven2/" }
+}
+
+dependencies {
+    profile "org.grails.profiles:web-plugin"
+}
