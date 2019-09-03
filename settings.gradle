@@ -1,11 +1,40 @@
 rootProject.name = 'Grails786'
+include 'Grails786'
 
 
 
-File systemModules = file('system-modules/')
-if (systemModules.exists()){
-    systemModules.list().each {
+// Grails Plugin Dependency
+String grailsPluginPath = "$grailsPluginDependencyPath"
+File grailsPlugin = file(grailsPluginPath)
+if (grailsPlugin.exists()){
+    grailsPlugin.list().each {
+        if(it != "empty"){
+            include(it)
+            project(":${it}").projectDir = file( grailsPluginPath + it)
+        }
+    }
+}
+
+
+// Application Module
+String applicationModule = "$grailsApplicationModulesPath"
+String applicationModuleGradlePath = "$applicationModuleGradlePath"
+if(new File(applicationModuleGradlePath).exists()) {
+    apply from: applicationModuleGradlePath
+    myPlugins().each {
         include(it)
-        project(":${it}").projectDir = file("system-modules/${it}")
+        project(":${it}").projectDir = file( applicationModule + it)
+    }
+}
+
+
+// Other Plugin
+File otherPlugins = file("$otherPluginPath")
+if (otherPlugins.exists()){
+    otherPlugins.list().each {
+        if(it != "empty"){
+            include(it)
+            project(":${it}").projectDir = file( "$otherPluginPath" + it)
+        }
     }
 }

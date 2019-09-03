@@ -10,4 +10,5 @@ out/
 .project
 .settings
 .classpath
-system-modules/grails-swagger
+/grails-plugin/grails-saas
+/grails-plugin/grails-swagger
