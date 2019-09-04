@@ -1,4 +1,4 @@
-package com.hmtmcse.anyplugin
+package com.hmtmcse.gauth
 
 import grails.boot.*
 import grails.boot.config.GrailsAutoConfiguration

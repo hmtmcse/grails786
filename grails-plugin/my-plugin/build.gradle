@@ -6,7 +6,7 @@ if (project.hasProperty('isParentGradleConfig') && project.isParentGradleConfig)
 
 
 version "1.0.0"
-group "com.hmtmcse.anyplugin"
+group "com.hmtmcse.gauth"
 
 
 dependencies {

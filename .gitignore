@@ -12,3 +12,4 @@ out/
 .classpath
 /grails-plugin/*
 /gradle/from-application-module.gradle
+/other-plugins/grails-common

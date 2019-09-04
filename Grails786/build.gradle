@@ -8,7 +8,6 @@ apply from: "${rootProject.projectDir}/gradle/codenarc.gradle"
 
 grails {
     plugins {
-        compile project(':my-plugin')
         compile project(':application')
         if(project.isApplicationModulesAvailable) {
             myPlugins().each {

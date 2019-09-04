@@ -147,24 +147,42 @@ subprojects { project ->
 
 
 // Grails Plugin Dependency
-String grailsPluginPath = "$grailsPluginDependencyPath"
-def dependentGrailsPlugin = [
-        "grails-swagger": "https://github.com/hmtmcse/grails-swagger.git",
-        "grails-auth": "https://github.com/hmtmcse/grails-auth.git",
-        "grails-saas": "https://github.com/hmtmcse/grails-saas.git"
+def projectDependencies = [
+        [
+                "name": "Grails Plugins",
+                "destination": grailsPluginDependencyPath,
+                "dependencies" : [
+                        "grails-swagger": "https://github.com/hmtmcse/grails-swagger.git",
+                        "grails-auth": "https://github.com/hmtmcse/grails-auth.git",
+                        "grails-saas": "https://github.com/hmtmcse/grails-saas.git"
+                ]
+        ],
+        [
+                "name": "Grails Others Plugins",
+                "destination": otherPluginPath,
+                "dependencies" : [
+                        "grails-common": "https://github.com/hmtmcse/grails-common.git",
+                ]
+        ]
 ]
+
 task resolveDependentGrailsPlugin {
     doLast {
-        dependentGrailsPlugin.each { name, url ->
-            println("------------------------------------------------------------------------------------------")
-            def destination = file( grailsPluginPath +  name)
-            try{
-                println("Cloning Project ${name}")
-                org.ajoberstar.grgit.Grgit.clone(dir: destination, uri: url)
-            }catch(Exception e){
-                println(e.getMessage())
-            }
-            println("------------------------------------------------------------------------------------------\n")
+        String destinationPath = ""
+        projectDependencies.each { Map dependencyMap ->
+            destinationPath = dependencyMap.destination
+            println("Now Cloning ${dependencyMap.name}")
+            dependencyMap.dependencies.each { name, url ->
+                println("------------------------------------------------------------------------------------------")
+                def destination = file( destinationPath +  name)
+                try{
+                    println("Cloning Project ${name}")
+                    org.ajoberstar.grgit.Grgit.clone(dir: destination, uri: url)
+                }catch(Exception e){
+                    println(e.getMessage())
+                }
+                println("------------------------------------------------------------------------------------------\n")
+            } 
         }
     }
 }
