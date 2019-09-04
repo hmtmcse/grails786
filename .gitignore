@@ -10,5 +10,5 @@ out/
 .project
 .settings
 .classpath
-/grails-plugin/grails-saas
-/grails-plugin/grails-swagger
+# /grails-plugin/*
+/gradle/from-application-module.gradle

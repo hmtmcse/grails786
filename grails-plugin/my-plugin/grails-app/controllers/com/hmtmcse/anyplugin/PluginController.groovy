@@ -1,4 +1,4 @@
-package yourplugin
+package com.hmtmcse.anyplugin
 
 class PluginController {
 
