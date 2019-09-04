@@ -1,5 +1,5 @@
 rootProject.name = 'Grails786'
-include 'Grails786'
+include 'Grails786', 'application'
 
 
 

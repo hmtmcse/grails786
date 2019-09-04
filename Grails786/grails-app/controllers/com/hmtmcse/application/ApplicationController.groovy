@@ -1,4 +1,4 @@
-package application
+package com.hmtmcse.application
 
 class ApplicationController {
 

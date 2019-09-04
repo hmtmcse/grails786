@@ -1,4 +1,4 @@
-package application
+package com.hmtmcse.application
 
 @SuppressWarnings(['UnnecessaryGString'])
 class UrlMappings {
