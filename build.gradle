@@ -16,6 +16,7 @@ buildscript {
 
 ext {
     grailsApps = ['Grails786']
+    isParentGradleConfig = true
 }
 
 Boolean isItPlugin(String pluginName){
