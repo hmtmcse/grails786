@@ -154,15 +154,14 @@ def projectDependencies = [
                 "dependencies" : [
                         "grails-swagger": "https://github.com/hmtmcse/grails-swagger.git",
                         "grails-auth": "https://github.com/hmtmcse/grails-auth.git",
-                        "grails-saas": "https://github.com/hmtmcse/grails-saas.git"
+                        "grails-saas": "https://github.com/hmtmcse/grails-saas.git",
+                        "grails-common": "https://github.com/hmtmcse/grails-common.git"
                 ]
         ],
         [
                 "name": "Grails Others Plugins",
                 "destination": otherPluginPath,
-                "dependencies" : [
-                        "grails-common": "https://github.com/hmtmcse/grails-common.git",
-                ]
+                "dependencies" : []
         ]
 ]
 
