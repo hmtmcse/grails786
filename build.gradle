@@ -17,7 +17,7 @@ buildscript {
 ext {
     grailsApps = ['Grails786']
     staticModule = ['application']
-    isParentGradleConfig = false
+    isParentGradleConfig = true
     isApplicationModulesAvailable = false
 }
 
