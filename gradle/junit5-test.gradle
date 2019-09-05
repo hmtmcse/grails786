@@ -1,6 +1,6 @@
-apply plugin:"org.grails.grails-plugin"
-apply plugin:"org.grails.grails-plugin-publish"
 
+
+apply plugin: 'java-library'
 
 repositories {
     mavenLocal()
@@ -11,5 +11,7 @@ repositories {
 }
 
 dependencies {
-    profile "org.grails.profiles:web-plugin"
+    testCompile 'org.junit.jupiter:junit-jupiter-api:5.3.1'
+    testRuntime 'org.junit.jupiter:junit-jupiter-engine:5.3.1'
 }
+
