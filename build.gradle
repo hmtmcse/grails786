@@ -42,8 +42,8 @@ subprojects { project ->
         apply plugin:"eclipse"
         apply plugin:"idea"
         apply plugin:"com.bertramlabs.asset-pipeline"
-        
-        
+
+
         if ( isGrailsApp ) {
             apply plugin:"org.grails.grails-web"
             apply plugin:"war"
@@ -63,14 +63,23 @@ subprojects { project ->
             maven { url "http://central.maven.org/maven2/" }
         }
 
+        configurations {
+            developmentOnly
+            runtimeClasspath {
+                extendsFrom developmentOnly
+            }
+        }
+
+
 
         // Common Dependency
         dependencies {
             // Spring Boot Dependency
-            compile "org.springframework.boot:spring-boot-starter-logging"
-            compile "org.springframework.boot:spring-boot-autoconfigure"
-            compile "org.springframework.boot:spring-boot-starter-actuator"
-            compile "org.springframework.boot:spring-boot-starter-tomcat"
+            developmentOnly("org.springframework.boot:spring-boot-devtools")
+            implementation "org.springframework.boot:spring-boot-starter-logging"
+            implementation "org.springframework.boot:spring-boot-autoconfigure"
+            implementation "org.springframework.boot:spring-boot-starter-actuator"
+            implementation "org.springframework.boot:spring-boot-starter-tomcat"
 
 
             // Grails Dependency
@@ -85,17 +94,20 @@ subprojects { project ->
             compile "org.grails:grails-plugin-url-mappings"
             compile "org.grails:grails-plugin-interceptors"
             compile "org.grails.plugins:cache"
-            compile "org.grails.plugins:async"     
+            compile "org.grails.plugins:async"
             console "org.grails:grails-console"
 
 
             // Other Dependency
+//            compileOnly "io.micronaut:micronaut-inject-groovy"
             runtime "com.bertramlabs.plugins:asset-pipeline-grails:3.0.10"
 
 
             // Testing
             testCompile "org.grails:grails-gorm-testing-support"
             testCompile "org.grails:grails-web-testing-support"
+            testCompile "org.mockito:mockito-core"
+
 
         }
 
@@ -106,8 +118,7 @@ subprojects { project ->
 
                 // Database
                 compile "org.grails.plugins:hibernate5"
-                compile "org.hibernate:hibernate-core:5.1.5.Final"
-
+                compile "org.hibernate:hibernate-core:5.4.0.Final"
                 runtime "com.h2database:h2"
                 runtime "org.apache.tomcat:tomcat-jdbc"
                 runtime "javax.xml.bind:jaxb-api:2.3.0"
@@ -118,16 +129,19 @@ subprojects { project ->
         if ( isGrailsPlugin ) {
             dependencies {
                 profile "org.grails.profiles:web-plugin"
-                provided "org.grails:grails-plugin-services"
-                provided "org.grails:grails-plugin-domain-class"
             }
         }
 
         bootRun {
-            jvmArgs('-Dspring.output.ansi.enabled=always')
-            addResources = true
+            jvmArgs(
+                    '-Dspring.output.ansi.enabled=always',
+                    '-noverify',
+                    '-XX:TieredStopAtLevel=1',
+                    '-Xmx1024m')
+            sourceResources sourceSets.main
             String springProfilesActive = 'spring.profiles.active'
             systemProperty springProfilesActive, System.getProperty(springProfilesActive)
+            systemProperty("spring.devtools.restart.additional-paths", "grails-plugin/*")
         }
     }
 
