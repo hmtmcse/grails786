@@ -11,7 +11,6 @@ File grailsPlugin = file(grailsPluginPath)
 
 grails {
     plugins {
-        compile project(':application')
         if(project.isApplicationModulesAvailable) {
             myPlugins().each {
                 println("Added Application Plugin: ${it}")
