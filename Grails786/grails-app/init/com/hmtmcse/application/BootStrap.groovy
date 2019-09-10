@@ -8,6 +8,7 @@ class BootStrap {
 
     def init = { servletContext ->
         GsConfigHolder.hostnameWithPort = "${TMGUtil.appBaseUrlHostWithPort()}"
+        GsConfigHolder.systemVersion = "V2"
         GsConfigHolder.swaggerDefinitionUrl = "${ApplicationConfig.appBaseUrl()}swaggerUi/definition"
         println("Bismillah")
     }
