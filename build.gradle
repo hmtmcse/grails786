@@ -175,7 +175,9 @@ def projectDependencies = [
         [
                 "name": "Grails Others Plugins",
                 "destination": otherPluginPath,
-                "dependencies" : []
+                "dependencies" : [
+                        "java-testing" : "https://github.com/hmtmcse/java-testing.git"
+                ]
         ]
 ]
 
