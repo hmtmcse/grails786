@@ -1,5 +1,5 @@
 ## How to start?
-1. clone the project https://gitlab.hidayahsmart.solutions/touhid/react-lerna.git
+1. clone the project https://github.com/hmtmcse/grails786.git
 2. cd react-lerna
 3. cd scripts
 4. sh start.sh
