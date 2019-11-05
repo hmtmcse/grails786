@@ -1,6 +1,5 @@
 package com.hmtmcse.application
 
-@SuppressWarnings(['UnnecessaryGString'])
 class UrlMappings {
 
     static mappings = {
@@ -10,7 +9,7 @@ class UrlMappings {
             }
         }
 
-        "/"(view:"/index")
+        "/"(controller: "swaggerUi", action: "index")
         "500"(view:'/error')
         "404"(view:'/notFound')
     }
