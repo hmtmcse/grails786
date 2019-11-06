@@ -18,4 +18,7 @@ task('functionalTest', type: Test) {
 
 dependencies {
     compile project(":grails-gs-rest-test")
+    testCompile 'com.athaydes:spock-reports:1.6.2', { transitive = false }
+    testCompile 'org.slf4j:slf4j-api:1.7.28'
+    testCompile 'org.slf4j:slf4j-simple:1.7.28'
 }

@@ -181,6 +181,7 @@ def projectDependencies = [
                         "java-http-util" : "https://github.com/hmtmcse/java-http-util.git",
                         "grails-gs-rest-test" : "https://github.com/hmtmcse/grails-gs-rest-test.git",
                         "java-crypto-and-auth" : "https://github.com/hmtmcse/java-crypto-and-auth.git",
+                        "java-text-and-file-util" : "https://github.com/hmtmcse/java-text-and-file-util.git",
                 ]
         ]
 ]
