@@ -119,7 +119,7 @@ subprojects { project ->
                 // Database
                 compile "org.grails.plugins:hibernate5"
                 compile "org.hibernate:hibernate-core:5.4.0.Final"
-                runtime "com.h2database:h2"
+                runtime 'mysql:mysql-connector-java:8.0.17'
                 runtime "org.apache.tomcat:tomcat-jdbc"
                 runtime "javax.xml.bind:jaxb-api:2.3.0"
             }

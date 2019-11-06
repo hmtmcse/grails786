@@ -28,10 +28,18 @@ if(new File(applicationModuleGradlePath).exists()) {
 }
 
 
+Map notIncludeOnSetup = [
+        "app-api-test": "app-api-test"
+]
+
 // Other Plugin
+String notInclude = "$notInclude"
 File otherPlugins = file("$otherPluginPath")
 if (otherPlugins.exists()){
     otherPlugins.list().each {
+        if (notInclude == "true" && notIncludeOnSetup[it]){
+            return
+        }
         if(it != "empty"){
             include(it)
             project(":${it}").projectDir = file( "$otherPluginPath" + it)
