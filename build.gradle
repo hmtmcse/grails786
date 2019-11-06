@@ -176,7 +176,11 @@ def projectDependencies = [
                 "name": "Grails Others Plugins",
                 "destination": otherPluginPath,
                 "dependencies" : [
-                        "java-testing" : "https://github.com/hmtmcse/java-testing.git"
+                        "java-common" : "https://github.com/hmtmcse/java-common.git",
+                        "java-date-time-util" : "https://github.com/hmtmcse/java-date-time-util.git",
+                        "java-http-util" : "https://github.com/hmtmcse/java-http-util.git",
+                        "grails-gs-rest-test" : "https://github.com/hmtmcse/grails-gs-rest-test.git",
+                        "java-crypto-and-auth" : "https://github.com/hmtmcse/java-crypto-and-auth.git",
                 ]
         ]
 ]

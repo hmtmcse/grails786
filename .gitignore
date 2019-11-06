@@ -12,4 +12,6 @@ out/
 .classpath
 /grails-plugin/*
 /gradle/from-application-module.gradle
-/other-plugins/java-testing
+/other-plugins/*
+!/other-plugins/codenarc-rule
+!/other-plugins/app-api-test

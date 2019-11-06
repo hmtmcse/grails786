@@ -1,0 +1,21 @@
+plugins {
+    id 'groovy'
+    id 'java'
+}
+
+group 'com.hmtmcse'
+version '1.0.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+task('functionalTest', type: Test) {
+    systemProperty 'com.athaydes.spockframework.report.outputDir', 'build/reports/spock'
+}
+
+dependencies {
+    compile project(":grails-gs-rest-test")
+}
