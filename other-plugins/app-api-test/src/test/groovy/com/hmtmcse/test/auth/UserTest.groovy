@@ -3,6 +3,7 @@ package com.hmtmcse.test.auth
 import com.hmtmcse.gsrest.GsAPISpecification
 import com.hmtmcse.test.Constant
 import com.hmtmcse.test.data.UserData
+import com.hmtmcse.test.helper.UserHelper
 
 
 class UserTest extends GsAPISpecification {
@@ -13,23 +14,20 @@ class UserTest extends GsAPISpecification {
         this.apiURL = Constant.API_URL + "api/v1/"
     }
 
-    def "Post Create Test"() {
+
+
+    def "Method:Post Create Test"() {
 
         expect: "Check Creation"
-        println(user.firstName + " " + user.lastName)
-        println(mapToString(user))
         apiRequest.jsonPost("user/create", mapToString(user))
-        Map response = stringToMap(apiResponse.content)
-
-        println(jsonResponseContent)
-
+        UserHelper.checkIsCreationSuccess(jsonResponseContent, user)
 
         where: "Process Data"
         user << UserData.listOfUsers
     }
 
 
-    def "postUpdate Test"(){
+    def "Method:Post Update Test"(){
 
         when:
         apiRequest.getRequest("/")
@@ -39,7 +37,7 @@ class UserTest extends GsAPISpecification {
 
     }
 
-    def "deleteDelete Test"(){
+    def "Method:Delete Delete Test"(){
 
         when:
         apiRequest.getRequest("/")
@@ -49,7 +47,7 @@ class UserTest extends GsAPISpecification {
 
     }
 
-    def "deleteHardDelete Test"(){
+    def "Method:Delete HardDelete Test"(){
 
         when:
         apiRequest.getRequest("/")
@@ -59,7 +57,7 @@ class UserTest extends GsAPISpecification {
 
     }
 
-    def "postList Test"(){
+    def "Method:Post List Test"(){
 
         when:
         apiRequest.getRequest("/")
@@ -69,7 +67,7 @@ class UserTest extends GsAPISpecification {
 
     }
 
-    def "getList Test"(){
+    def "Method:Get List Test"(){
 
         when:
         apiRequest.getRequest("/")
@@ -79,7 +77,7 @@ class UserTest extends GsAPISpecification {
 
     }
 
-    def "postDetails Test"(){
+    def "Method:Post Details Test"(){
 
         when:
         apiRequest.getRequest("/")
@@ -89,7 +87,7 @@ class UserTest extends GsAPISpecification {
 
     }
 
-    def "getDetails Test"(){
+    def "Method:Get Details Test"(){
 
         when:
         apiRequest.getRequest("/")
@@ -99,7 +97,7 @@ class UserTest extends GsAPISpecification {
 
     }
 
-    def "getActiveInactive Test"(){
+    def "Method:Get Active Inactive Test"(){
 
         when:
         apiRequest.getRequest("/")

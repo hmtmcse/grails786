@@ -12,4 +12,4 @@ dataSource:
   username: root
   password: ""
   dbCreate: update
-  url: "jdbc:mysql://localhost/wc_v4?useUnicode=yes&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC"
+  url: "jdbc:mysql://localhost/grails_786?useUnicode=yes&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC"

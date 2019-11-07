@@ -29,7 +29,10 @@ if(new File(applicationModuleGradlePath).exists()) {
 
 
 Map notIncludeOnSetup = [
-        "app-api-test": "app-api-test"
+        "app-api-test": "app-api-test",
+        "grails-gs-rest-test": "grails-gs-rest-test",
+        "java-text-and-file-util": "java-text-and-file-util",
+        "java-http-util": "java-http-util",
 ]
 
 // Other Plugin

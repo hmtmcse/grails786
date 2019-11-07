@@ -8,14 +8,22 @@ class UserData {
                     "lastName": "Mia",
                     "email": "hmtmcse.com@gmail.com",
                     "password": "123",
-                    "output": "123",
+                    "status": "success",
             ],
             [
                     "firstName": "Forida",
                     "lastName": "Parul",
                     "email": "forida@gmail.com",
                     "password": "123",
-                    "output": "123",
-            ]
+                    "status": "success"
+            ],
+            [
+                    "firstName": "Touhid",
+                    "lastName": "Mia",
+                    "email": "hmtmcse.com@gmail.com",
+                    "password": "123",
+                    "status": "error",
+                    "message": "mail already exists.",
+            ],
     ]
 }
