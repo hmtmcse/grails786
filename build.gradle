@@ -97,6 +97,9 @@ subprojects { project ->
             compile "org.grails.plugins:async"
             console "org.grails:grails-console"
 
+            // Common
+            runtime 'org.codehaus.groovy:groovy-dateutil'
+
 
             // Other Dependency
 //            compileOnly "io.micronaut:micronaut-inject-groovy"
