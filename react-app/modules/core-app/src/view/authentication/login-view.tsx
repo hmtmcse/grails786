@@ -61,11 +61,13 @@ class LoginView extends TRComponent<LoginUI, State> {
         if (!this.validateFormInput()) {
             this.showErrorFlash("Please enter email or password");
         } else {
-            this.postJsonToApi(ApiUrl.LOGIN_URL, APIHelper.requestDataMaker(this.state.formData),
+            this.postJsonToApi(ApiUrl.LOGIN_URL, this.state.formData,
                 {
                     callback(response: TRHTTResponse): void {
                         let apiResponse = APIHelper.processSuccessResponse(response, _this);
-                        if (apiResponse.status === AppConstant.STATUS_SUCCESS && apiResponse.data.token) {
+                        console.log("-----------------")
+                        console.log(apiResponse)
+                        if (apiResponse.status === AppConstant.STATUS_SUCCESS && apiResponse.data.login.accessToken) {
                             AuthenticationService.instance().processLoginToken(apiResponse.data);
                             TrUtil.gotoUrl(_this, "/dashboard");
                         }

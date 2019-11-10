@@ -6,12 +6,14 @@ export default class AuthenticationService {
 
     public processLoginToken(data: any) {
         TRBrowserStorageManager.add("isAuthorized", true);
-        TRBrowserStorageManager.add("token", data.token)
+        let accessData = data.login;
+        TRBrowserStorageManager.add("accessToken", accessData.accessToken);
+        TRBrowserStorageManager.add("refreshToken", accessData.refreshToken)
     }
 
     public processAuth(request: TRHTTRequest): TRHTTRequest {
-        let token = TRBrowserStorageManager.getByKey("token");
-        request.headers = TrUtil.addDataToObject(request.headers, "Authorization", "Bearer " + token);
+        let accessToken = TRBrowserStorageManager.getByKey("accessToken");
+        request.headers = TrUtil.addDataToObject(request.headers, "Authorization", "Bearer " + accessToken);
         return request;
     }
 

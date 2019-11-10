@@ -21,7 +21,7 @@ export default class AppConfig extends TRAppConfig {
 
 
     public getBaseURL(): string {
-        return "http://103.69.149.242:5000/";
+        return "http://localhost:6601/";
     }
 
     public isUnauthorized (response?: TRHTTResponse): boolean {

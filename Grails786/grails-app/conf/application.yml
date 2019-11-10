@@ -7,6 +7,8 @@ tmApp:
 
 ---
 grails:
+    cors:
+        enabled: true
     profile: web
     codegen:
         defaultPackage: application

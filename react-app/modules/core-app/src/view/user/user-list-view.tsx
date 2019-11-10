@@ -54,8 +54,8 @@ class UserListView extends TRComponent<Props, UserListViewState> {
                 callback(response: TRHTTResponse): void {
                     let apiResponse = APIHelper.processSuccessResponse(response, _this);
                     let list = [];
-                    if (apiResponse.data.users){
-                        list = apiResponse.data.users;
+                    if (apiResponse.data){
+                        list = apiResponse.data;
                     }
                     _this.setState({
                         list: list,
