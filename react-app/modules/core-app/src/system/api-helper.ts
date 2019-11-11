@@ -47,15 +47,4 @@ export default class APIHelper {
             component.showErrorFlash(message);
         }
     }
-
-    public static sortAndPagination(field: string, order: string) {
-        let formData: { [key: string]: any } = {};
-        if (field && order) {
-            formData.where =  {
-                order: {[field] : order}
-            };
-        }
-        return formData;
-    }
-
 }

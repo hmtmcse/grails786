@@ -21,6 +21,9 @@ import TRTableHeader, {SortDirection} from "react-mui-ui/ui/tr-table-header";
 import {Align, TRTableActionDataHelper, TRTableHeaderDataHelper} from "react-mui-ui/ui/tr-ui-data";
 import TRTableAction from "react-mui-ui/ui/tr-table-action";
 import {TrUtil} from "tm-react/src/artifacts/util/tr-util";
+import TRPagination from "react-mui-ui/ui/tr-pagination";
+import {ApiUtil} from "../../system/api-util";
+import SystemConfig from "../../system/system-config";
 
 
 interface Props extends TRProps {
@@ -40,7 +43,7 @@ class UserListViewState extends TRComponentState {
 
 class UserListView extends TRComponent<Props, UserListViewState> {
 
-    state: UserListViewState = new UserListViewState();
+    state: UserListViewState = new UserListViewState().setMaxItem(SystemConfig.itemPerPage());
 
     componentDidMount() {
         this.showRedirectMessage();
@@ -49,7 +52,7 @@ class UserListView extends TRComponent<Props, UserListViewState> {
 
     public loadData(data: object = {}){
         const _this = this;
-        this.postJsonToApi(ApiUrl.USER_LIST, data,
+        this.postJsonToApi(ApiUrl.USER_LIST, ApiUtil.getSortAndPaginationData(this.state),
             {
                 callback(response: TRHTTResponse): void {
                     let apiResponse = APIHelper.processSuccessResponseWithApi(response, _this);
@@ -101,26 +104,7 @@ class UserListView extends TRComponent<Props, UserListViewState> {
                 <Paper>
                     <Table>
                         <TRTableHeader
-                            clickForSortFunction={
-                                {
-                                    click(event: any, onClickData: any): void {
-                                        console.log(onClickData);
-                                        _this.sortItemAction(event, onClickData,  () => {
-                                            _this.loadData(APIHelper.sortAndPagination(onClickData.fieldName, component.state.sortDirection));
-                                        });
-                                        // if (component.state.sortDirection === SortDirection.ascending){
-                                        //     component.setState({
-                                        //         sortDirection: SortDirection.descending
-                                        //     })
-                                        // } else{
-                                        //     component.setState({
-                                        //         sortDirection: SortDirection.ascending
-                                        //     })
-                                        // }
-
-                                    }
-                                }
-                            }
+                            clickForSortFunction={{click(event: any, onClickData: any): void {_this.sortItemAction(event, onClickData, _this.loadData())}}}
                             actionColumnAlign={Align.right}
                             headers={tableHeaderDefinition.getHeaders()}
                             orderBy={this.state.orderBy}
@@ -137,6 +121,7 @@ class UserListView extends TRComponent<Props, UserListViewState> {
                             ))}
                         </TableBody>
                     </Table>
+                    <TRPagination {...ApiUtil.paginationManager(this, ()=>{_this.loadData()})}/>
                 </Paper>
             </React.Fragment>);
     }

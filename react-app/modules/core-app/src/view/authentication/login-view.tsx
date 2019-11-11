@@ -64,10 +64,10 @@ class LoginView extends TRComponent<LoginUI, State> {
             this.postJsonToApi(ApiUrl.LOGIN_URL, this.state.formData,
                 {
                     callback(response: TRHTTResponse): void {
-                        let apiResponse = APIHelper.processSuccessResponse(response, _this);
+                        let apiResponse = APIHelper.processSuccessResponseWithApi(response, _this);
                         console.log("-----------------")
                         console.log(apiResponse)
-                        if (apiResponse.status === AppConstant.STATUS_SUCCESS && apiResponse.data.login.accessToken) {
+                        if (apiResponse && apiResponse.status === AppConstant.STATUS_SUCCESS && apiResponse.data.login.accessToken) {
                             AuthenticationService.instance().processLoginToken(apiResponse.data);
                             TrUtil.gotoUrl(_this, "/dashboard");
                         }
