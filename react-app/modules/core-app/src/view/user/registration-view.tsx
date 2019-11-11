@@ -12,7 +12,6 @@ import {
     Typography,
     withStyles
 } from "react-mui-ui/ui/ui-component";
-import {LoginLayoutJss} from "../../assets/login-layout-jss";
 import {TRProps} from "tm-react/src/artifacts/model/tr-model";
 import {TrUtil} from "tm-react/src/artifacts/util/tr-util";
 import {TrFormDefinitionData} from "tm-react/src/artifacts/data/tr-form-definition-data";
@@ -40,16 +39,17 @@ class RegistrationView extends TRComponent<Props, State> {
             required: true,
             errorMessage: "Please Enter Email Address",
         }));
-        this.addFormDefinition("first_name", new TrFormDefinitionData({
+        this.addFormDefinition("firstName", new TrFormDefinitionData({
             required: true,
             errorMessage: "Please Enter First Name",
 
         }));
-        this.addFormDefinition("last_name", new TrFormDefinitionData({
+        this.addFormDefinition("password", new TrFormDefinitionData({
             required: true,
-            errorMessage: "Please Enter Last Name",
+            errorMessage: "Please Enter Password.",
 
         }));
+
     }
 
 
@@ -57,11 +57,11 @@ class RegistrationView extends TRComponent<Props, State> {
         event.preventDefault();
         const _this = this;
         if (this.validateFormInput()) {
-            this.postJsonToApi(ApiUrl.USER_REGISTER, APIHelper.requestDataMaker(this.state.formData),
+            this.postJsonToApi(ApiUrl.USER_REGISTER, this.state.formData,
                 {
                     callback(response: TRHTTResponse): void {
-                        let apiResponse = APIHelper.processSuccessResponse(response, _this);
-                        if (apiResponse.status === AppConstant.STATUS_SUCCESS) {
+                        let apiResponse = APIHelper.processSuccessResponseWithApi(response, _this);
+                        if (apiResponse && apiResponse.status === AppConstant.STATUS_SUCCESS) {
                             _this.successRedirect( "/user", apiResponse.message);
                         }
                     }
@@ -85,9 +85,10 @@ class RegistrationView extends TRComponent<Props, State> {
                     <form onSubmit={(event: any) => { this.onSubmit(event)}} noValidate>
                         <CardContent>
                             <Grid component="div" container spacing={3}>
-                                <Grid item xs={6} component="div"><TextField {...this.handleInputDataChange("first_name")} label="First Name" margin="normal" fullWidth /></Grid>
-                                <Grid item xs={6} component="div"><TextField {...this.handleInputDataChange("last_name")}  label="Last Name" margin="normal" fullWidth /></Grid>
+                                <Grid item xs={6} component="div"><TextField {...this.handleInputDataChange("firstName")} label="First Name" margin="normal" fullWidth /></Grid>
+                                <Grid item xs={6} component="div"><TextField {...this.handleInputDataChange("lastName")}  label="Last Name" margin="normal" fullWidth /></Grid>
                                 <Grid item xs={6} component="div"><TextField {...this.handleInputDataChange("email")} type="email" label="Email Address" margin="normal" fullWidth /></Grid>
+                                <Grid item xs={6} component="div"><TextField {...this.handleInputDataChange("password")} type="password" label="Password" margin="normal" fullWidth /></Grid>
                             </Grid>
                         </CardContent>
                         <CardActions>

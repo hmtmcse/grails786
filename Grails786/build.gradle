@@ -20,7 +20,7 @@ grails {
 
         if (grailsPlugin.exists()){
             grailsPlugin.list().each {
-                if(it != "empty"){
+                if(it != "empty" && it != "my-plugin"){
                     println("Added Grails Plugin: ${it}")
                     compile project(":${it}")
                 }
