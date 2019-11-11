@@ -24,4 +24,5 @@ export const AppConstant = {
     TODO: "TODO",
     FAILED: "FAILED",
     STATUS_SUCCESS: "success",
+    STATUS_ERROR: "error",
 };

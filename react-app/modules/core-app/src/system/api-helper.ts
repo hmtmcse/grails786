@@ -1,5 +1,6 @@
 import TRHTTResponse from "tm-react/src/artifacts/processor/http/tr-http-response";
-import {object, string} from "prop-types";
+import {string} from "prop-types";
+import {AppConstant} from "./app-constant";
 
 
 export default class APIHelper {
@@ -8,8 +9,17 @@ export default class APIHelper {
         return {data: map}
     }
 
+    public static processSuccessResponseWithApi(response: TRHTTResponse, component: any) {
+        let apiResponse = APIHelper.processSuccessResponse(response, component);
+        if (apiResponse.status == AppConstant.STATUS_ERROR && apiResponse.error && apiResponse.error.message){
+            component.showErrorFlash(apiResponse.error.message);
+            return null;
+        }else{
+            return apiResponse;
+        }
+    }
+
     public static processSuccessResponse(response: TRHTTResponse, component: any) {
-        console.log(response);
         if (!response.isSuccess || !response.responseData) {
             let message = "Unable to communicate with remote server";
             if (response.responseData.message){
@@ -34,6 +44,16 @@ export default class APIHelper {
             }
             component.showErrorFlash(message);
         }
+    }
+
+    public static sortAndPagination(field: string, order: string) {
+        let formData: { [key: string]: any } = {};
+        if (field && order) {
+            formData.where =  {
+                order: {[field] : order}
+            };
+        }
+        return formData;
     }
 
 }

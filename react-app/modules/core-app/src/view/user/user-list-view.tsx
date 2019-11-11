@@ -47,21 +47,20 @@ class UserListView extends TRComponent<Props, UserListViewState> {
         this.loadData();
     }
 
-    public loadData(){
+    public loadData(data: object = {}){
         const _this = this;
-        this.getToApi(ApiUrl.USER_LIST,
+        this.postJsonToApi(ApiUrl.USER_LIST, data,
             {
                 callback(response: TRHTTResponse): void {
-                    let apiResponse = APIHelper.processSuccessResponse(response, _this);
+                    let apiResponse = APIHelper.processSuccessResponseWithApi(response, _this);
                     let list = [];
-                    if (apiResponse.data){
+                    if (apiResponse && apiResponse.data){
                         list = apiResponse.data;
                     }
                     _this.setState({
                         list: list,
                         apiData: apiResponse
                     });
-                    console.log(apiResponse);
                 }
             },
             {
@@ -77,7 +76,7 @@ class UserListView extends TRComponent<Props, UserListViewState> {
         const component = this;
         const _this = this;
         let tableAction: TRTableActionDataHelper = TRTableActionDataHelper.start("Details", "");
-        tableAction.addAction("Reset Password")
+        tableAction.addAction("Reset Password");
         tableAction.addAction("Change Password").setAction({click(event: any, onClickData: any): void {
             console.log("Reset");
                _this.redirect("/user/change-password")
@@ -105,16 +104,19 @@ class UserListView extends TRComponent<Props, UserListViewState> {
                             clickForSortFunction={
                                 {
                                     click(event: any, onClickData: any): void {
-                                        console.log("Clicked");
-                                        if (component.state.sortDirection === SortDirection.ascending){
-                                            component.setState({
-                                                sortDirection: SortDirection.descending
-                                            })
-                                        } else{
-                                            component.setState({
-                                                sortDirection: SortDirection.ascending
-                                            })
-                                        }
+                                        console.log(onClickData);
+                                        _this.sortItemAction(event, onClickData,  () => {
+                                            _this.loadData(APIHelper.sortAndPagination(onClickData.fieldName, component.state.sortDirection));
+                                        });
+                                        // if (component.state.sortDirection === SortDirection.ascending){
+                                        //     component.setState({
+                                        //         sortDirection: SortDirection.descending
+                                        //     })
+                                        // } else{
+                                        //     component.setState({
+                                        //         sortDirection: SortDirection.ascending
+                                        //     })
+                                        // }
 
                                     }
                                 }
