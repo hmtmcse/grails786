@@ -11,8 +11,6 @@ export default class APIHelper {
 
     public static processSuccessResponseWithApi(response: TRHTTResponse, component: any) {
         let apiResponse = APIHelper.processSuccessResponse(response, component);
-        console.log("Api Response");
-        console.log(apiResponse)
         if (apiResponse.status == AppConstant.STATUS_ERROR && apiResponse.error && apiResponse.error.message){
             component.showErrorFlash(apiResponse.error.message);
             return null;

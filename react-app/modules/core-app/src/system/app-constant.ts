@@ -10,6 +10,7 @@ export const AppConstant = {
     PREFERENCE: "PREFERENCE",
     rowsPerPage: 10,
     defaultOffset: 0,
+    pressEnter: 13,
     rowsPerPageOptions: [10, 20, 50, 100, 500, 1000],
 
 

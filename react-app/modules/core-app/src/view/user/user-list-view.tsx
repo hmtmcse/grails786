@@ -31,8 +31,9 @@ interface Props extends TRProps {
     classes: any;
 }
 
-const tableHeaderDefinition = TRTableHeaderDataHelper.init("Email", "email", true, "", Align.left);
-tableHeaderDefinition.add( "Username", "username", true, "", Align.left);
+const tableHeaderDefinition = TRTableHeaderDataHelper.init("First Name", "firstName", true, "First Name", Align.left);
+tableHeaderDefinition.add( "Last Name", "lastName", true, "Last Name", Align.left);
+tableHeaderDefinition.add( "Email", "email", true, "Email Address", Align.left);
 
 
 
@@ -50,18 +51,24 @@ class UserListView extends TRComponent<Props, UserListViewState> {
         this.loadData();
     }
 
-    public loadData(data: object = {}){
+    public loadData(data: object = {}) {
         const _this = this;
         this.postJsonToApi(ApiUrl.USER_LIST, ApiUtil.getSortAndPaginationData(this.state),
             {
                 callback(response: TRHTTResponse): void {
                     let apiResponse = APIHelper.processSuccessResponseWithApi(response, _this);
                     let list = [];
-                    if (apiResponse && apiResponse.data){
+                    if (apiResponse && apiResponse.data) {
                         list = apiResponse.data;
+                    }
+
+                    let totalItem = 0;
+                    if (apiResponse && apiResponse.pagination && apiResponse.pagination.total) {
+                        totalItem = apiResponse.pagination.total;
                     }
                     _this.setState({
                         list: list,
+                        totalItem: totalItem,
                         apiData: apiResponse
                     });
                 }
@@ -75,8 +82,7 @@ class UserListView extends TRComponent<Props, UserListViewState> {
     }
 
     renderUI() {
-        const {route, classes} = this.props;
-        const component = this;
+        const {classes} = this.props;
         const _this = this;
         let tableAction: TRTableActionDataHelper = TRTableActionDataHelper.start("Details", "");
         tableAction.addAction("Reset Password");
@@ -94,9 +100,9 @@ class UserListView extends TRComponent<Props, UserListViewState> {
                         <Typography variant="h5">Users</Typography>
                     </div>
                     <div>
-                        <form className={classes.displayInline}>
-                            <TextField placeholder="search" name="search"/>
-                        </form>
+                        <div className={classes.displayInline}>
+                            <TextField placeholder="search" name="search" onKeyUp={(event: any)=>{ApiUtil.search(event, _this, ["firstName", "lastName", "email"])}}/>
+                        </div>
                         <Button className={classes.marginToLeft}  variant="contained" color="primary" onClick={(event:any) => {TrUtil.gotoUrl(_this, "/user/registration")}}>Create</Button>
                         <Button className={classes.marginToLeft}  variant="contained" color="primary" onClick={(event:any) => {this.loadData()}} >Reload</Button>
                     </div>
@@ -104,7 +110,7 @@ class UserListView extends TRComponent<Props, UserListViewState> {
                 <Paper>
                     <Table>
                         <TRTableHeader
-                            clickForSortFunction={{click(event: any, onClickData: any): void {_this.sortItemAction(event, onClickData, _this.loadData())}}}
+                            clickForSortFunction={{click(event: any, onClickData: any): void {_this.sortItemAction(event, onClickData, () => {_this.loadData()})}}}
                             actionColumnAlign={Align.right}
                             headers={tableHeaderDefinition.getHeaders()}
                             orderBy={this.state.orderBy}
@@ -112,8 +118,9 @@ class UserListView extends TRComponent<Props, UserListViewState> {
                         <TableBody>
                             {this.state.list.map((row: any, index:any) => (
                                 <TableRow key={index} >
+                                    <TableCell align="left">{row.firstName}</TableCell>
+                                    <TableCell align="left">{row.lastName}</TableCell>
                                     <TableCell align="left">{row.email}</TableCell>
-                                    <TableCell align="left">{row.username}</TableCell>
                                     <TableCell align="right">
                                         <TRTableAction actions={tableAction.getMap()}/>
                                     </TableCell>

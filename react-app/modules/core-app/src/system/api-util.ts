@@ -1,5 +1,6 @@
 import TRComponentState from "tm-react/src/artifacts/component/tr-component-state";
 import SystemConfig from "./system-config";
+import {AppConstant} from "./app-constant";
 
 
 export const ApiUtil = {
@@ -12,12 +13,18 @@ export const ApiUtil = {
         return undefined
     },
 
-    search(component: any, value: any) {
-        if (value) {
-            component.state.queryCondition["wildcard_search"] = "%" + value + "%";
-        }
-        if (component.loadData) {
-            component.loadData();
+    search(event: any, component: any, searchKey: string[]) {
+        if (event.keyCode === AppConstant.pressEnter) {
+            if (searchKey) {
+                let search: { [key: string]: any } = {};
+                searchKey.forEach((value) => {
+                    search[value] = "%" + event.target.value + "%";
+                });
+                component.state.queryCondition["search"] = search;
+            }
+            if (component.loadData) {
+                component.loadData();
+            }
         }
     },
 
@@ -50,11 +57,9 @@ export const ApiUtil = {
             max: state.maxItem,
             where: ApiUtil.sortAndPagination(state.orderBy, state.sortDirection)
         };
-        if (state.queryCondition["wildcard_search"]){
-            sortAndPagination["wildcard_search"] = state.queryCondition["wildcard_search"]
-        }
-        if (state.queryCondition["where"]){
-            sortAndPagination["where"] = state.queryCondition["where"]
+        if (state.queryCondition["search"]){
+            sortAndPagination["where"]["or"] = {};
+            sortAndPagination["where"]["or"]["like"] = state.queryCondition["search"]
         }
         return sortAndPagination;
     },

@@ -2,15 +2,7 @@ import React from 'react';
 import TRComponent from "tm-react/src/artifacts/component/tr-component";
 import TRComponentState from "tm-react/src/artifacts/component/tr-component-state";
 import {
-    Avatar,
-    Button, Card, CardActions, CardContent, CardHeader,
-    CssBaseline,
-    FormControl, FormHelperText, Grid,
-    Input,
-    InputLabel,
-    Paper, TextField,
-    Typography,
-    withStyles
+    Button, Card, CardActions, CardContent, CardHeader, Grid, TextField
 } from "react-mui-ui/ui/ui-component";
 import {TRProps} from "tm-react/src/artifacts/model/tr-model";
 import {TrUtil} from "tm-react/src/artifacts/util/tr-util";

@@ -5,7 +5,7 @@ export default class SystemConfig {
 
 
     public static itemPerPage(): number {
-        return 5;
+        return 10;
     }
 
     public static itemPerPageDropdown() {
