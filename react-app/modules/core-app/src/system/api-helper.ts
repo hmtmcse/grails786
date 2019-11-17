@@ -1,5 +1,4 @@
 import TRHTTResponse from "tm-react/src/artifacts/processor/http/tr-http-response";
-import {string} from "prop-types";
 import {AppConstant} from "./app-constant";
 
 

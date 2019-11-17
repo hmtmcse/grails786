@@ -12,6 +12,7 @@ class BootStrap {
         GsConfigHolder.swaggerDefinitionUrl = "${ApplicationConfig.appBaseUrl()}swaggerUi/definition"
         println("Bismillah")
     }
-    def destroy = {
-    }
+
+    def destroy = {}
+
 }

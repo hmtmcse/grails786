@@ -7,6 +7,7 @@ import AppSuspenseLoader from "../view/common/app-suspense-loader";
 import TRHTTAuthCallback from "tm-react/src/artifacts/processor/http/tr-http-auth-callback";
 import TRHTTRequest from "tm-react/src/artifacts/processor/http/tr-http-request";
 import AuthenticationService from "../service/authentication-service";
+import {TRHTTPCall} from "tm-react/src/artifacts/model/tr-model";
 
 
 export default class AppConfig extends TRAppConfig {
@@ -24,17 +25,26 @@ export default class AppConfig extends TRAppConfig {
         return "http://localhost:6601/";
     }
 
-    public isUnauthorized (response?: TRHTTResponse): boolean {
-        return false;
+    public isAuthorized (response?: TRHTTResponse): boolean {
+        console.log(response);
+        if (response && response.httpCode === 401){
+            console.log("401 Unauthorized!");
+            return false
+        }
+        return true;
     }
 
     public authCallback(): TRHTTAuthCallback | undefined{
         let authCallback: TRHTTAuthCallback = {
             process(request: TRHTTRequest): TRHTTRequest {
-                console.log(request);
                 return AuthenticationService.instance().processAuth(request);
             }
         };
         return authCallback;
+    }
+
+    public renewAuthorization (trHttpCall: TRHTTPCall): void {
+        let authService = new AuthenticationService();
+        authService.renewAuthorization(trHttpCall);
     }
 }

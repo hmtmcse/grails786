@@ -24,6 +24,7 @@ import {TrUtil} from "tm-react/src/artifacts/util/tr-util";
 import TRPagination from "react-mui-ui/ui/tr-pagination";
 import {ApiUtil} from "../../system/api-util";
 import SystemConfig from "../../system/system-config";
+import CBTableAction from "../../override/cm-table-action";
 
 
 interface Props extends TRProps {
@@ -122,7 +123,7 @@ class UserListView extends TRComponent<Props, UserListViewState> {
                                     <TableCell align="left">{row.lastName}</TableCell>
                                     <TableCell align="left">{row.email}</TableCell>
                                     <TableCell align="right">
-                                        <TRTableAction actions={tableAction.getMap()}/>
+                                        <CBTableAction actions={tableAction.getMap()}/>
                                     </TableCell>
                                 </TableRow>
                             ))}
