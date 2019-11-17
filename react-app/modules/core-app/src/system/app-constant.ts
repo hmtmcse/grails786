@@ -1,6 +1,6 @@
 export const AppConstant = {
 
-    appName: "CRM",
+    appName: "Application Manager",
     navName: "Navigation",
     loginLabel: "Development Task Manager",
 

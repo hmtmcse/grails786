@@ -46,7 +46,7 @@ export default class AuthenticationService {
         const  component = trHttpCall.getComponent();
         let request: TRHTTRequest = component.httpRequestData(ApiUrl.RENEW_TOKEN_URL);
         request.requestData = {
-            token: TRBrowserStorageManager.getByKey("refreshToken")
+            refreshToken: TRBrowserStorageManager.getByKey("refreshToken")
         };
         let callback: TRHTTCallback = {
             before: (response: TRHTTResponse) => {
@@ -54,9 +54,7 @@ export default class AuthenticationService {
             },
             success: (response: TRHTTResponse) => {
                 const responseData = ApiUtil.getResponseData(response);
-                console.log("in Renew");
-                console.log(responseData);
-                if (responseData && this.addAuthorizationMetaData(responseData)) {
+                if (responseData && responseData.status !== "error" && this.addAuthorizationMetaData(responseData.data)) {
                     trHttpCall.resume();
                 }else{
                     TrUtil.redirectTo( "/");

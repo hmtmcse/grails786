@@ -6,8 +6,8 @@ import {AppConstant} from "./app-constant";
 export const ApiUtil = {
 
     getResponseData: (response: any) => {
-        const {status, responseData} = response.responseData;
-        if (responseData && status) {
+        const {isSuccess, responseData} = response;
+        if (responseData && isSuccess) {
             return responseData
         }
         return undefined
