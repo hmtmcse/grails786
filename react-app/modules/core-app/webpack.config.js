@@ -48,7 +48,7 @@ module.exports = {
     },
     plugins: [
         new HtmlWebpackPlugin({
-            title: '...::: CRM :::...',
+            title: '...::: App :::...',
             chunksSortMode: 'none',
             template: './index.html',
             minify: true
