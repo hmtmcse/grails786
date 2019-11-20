@@ -12,7 +12,7 @@ import {
 } from "react-mui-ui/ui/ui-component";
 import {LoginLayoutJss} from "../../assets/login-layout-jss";
 import {TRProps} from "tm-react/src/artifacts/model/tr-model";
-import avatarImage from '../../assets/images/logo.jpg';
+// import avatarImage from 'core-app/assets/images/logo.jpg';
 import {TrFormDefinitionData} from "tm-react/src/artifacts/data/tr-form-definition-data";
 import {Link} from "react-router-dom";
 import APIHelper from "../../system/api-helper";
@@ -85,7 +85,7 @@ class LoginView extends TRComponent<LoginUI, State> {
                 <CssBaseline/>
                 <main className={classes.layout}>
                     <Paper className={classes.paper}>
-                        <Avatar className={classes.avatar} src={avatarImage}/>
+                        {/*<Avatar className={classes.avatar} src={avatarImage}/>*/}
                         <Typography variant="h5">Login Here</Typography>
                         <form onSubmit={(event:any) => {this.doLogin(event)}} className={classes.form} noValidate>
                             <TextField {...this.handleInputDataChange("email")} type="email" label="Email Address" margin="normal" fullWidth required/>

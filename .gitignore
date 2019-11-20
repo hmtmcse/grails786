@@ -16,3 +16,4 @@ out/
 /other-plugins/*
 !/other-plugins/codenarc-rule
 !/other-plugins/app-api-test
+/package.json
