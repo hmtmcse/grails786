@@ -60,7 +60,6 @@ class RegistrationView extends TRComponent<Props, State> {
                 },
                 {
                     callback(response: TRHTTResponse): void {
-                        console.log(response);
                         APIHelper.processErrorResponse(response, _this);
                     }
                 }
