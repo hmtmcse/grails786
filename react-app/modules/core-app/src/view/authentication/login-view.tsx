@@ -14,7 +14,7 @@ import {
 } from "react-mui-ui/ui/ui-component";
 import {LoginLayoutJss} from "../../assets/login-layout-jss";
 import {TRProps} from "tm-react/src/artifacts/model/tr-model";
-import avatarImage from '../../assets/images/logo-192x192.png';
+import avatarImage from '../../assets/images/logo.jpg';
 import {TrFormDefinitionData} from "tm-react/src/artifacts/data/tr-form-definition-data";
 import {Link} from "react-router-dom";
 import APIHelper from "../../system/api-helper";
@@ -65,8 +65,6 @@ class LoginView extends TRComponent<LoginUI, State> {
                 {
                     callback(response: TRHTTResponse): void {
                         let apiResponse = APIHelper.processSuccessResponseWithApi(response, _this);
-                        console.log("-----------------")
-                        console.log(apiResponse)
                         if (apiResponse && apiResponse.status === AppConstant.STATUS_SUCCESS && apiResponse.data.login.accessToken) {
                             AuthenticationService.instance().processLoginToken(apiResponse.data);
                             TrUtil.gotoUrl(_this, "/dashboard");
