@@ -8,6 +8,7 @@ import AppNavigation from "../../system/app-navigation";
 import NavigationBar from "../nav/navigation-bar";
 import TRBrowserStorageManager from "tm-react/src/artifacts/manager/tr-browser-storage-manager";
 import {Redirect} from "react-router";
+import {AppMessage} from "../../system/app-message";
 
 class PrivateLayout extends TRReactComponent<any, any> {
 
@@ -18,7 +19,7 @@ class PrivateLayout extends TRReactComponent<any, any> {
                 route={route}
                 appConfig={appConfig}
                 itemList={AppNavigation.getNavigation(route)}
-                appTitle={AppConstant.appName}
+                appTitle={AppMessage.appName}
                 bodyContent={<TRLayoutRenderer route={route} appConfig={appConfig} component={component}/>}/>
             );
 

@@ -61,7 +61,7 @@ interface TRTableActionProps extends TRProps {
     readonly [x: string]: any;
 }
 
-class CBTableAction extends TRReactComponent<TRTableActionProps, TRTableActionState> {
+class CaTableAction extends TRReactComponent<TRTableActionProps, TRTableActionState> {
 
 
 
@@ -85,4 +85,4 @@ class CBTableAction extends TRReactComponent<TRTableActionProps, TRTableActionSt
 
 }
 
-export default withStyles(TableJss)(CBTableAction);
+export default withStyles(TableJss)(CaTableAction);

@@ -1,5 +1,6 @@
 export const AppConstant = {
 
+
     appName: "Application Manager",
     navName: "Navigation",
     loginLabel: "Development Task Manager",
