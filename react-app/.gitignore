@@ -28,4 +28,4 @@ yarn-error.log
 package-lock.json
 modules/tm-react
 modules/react-mui-ui
-modules/bl-ui-app
+modules/bl-*

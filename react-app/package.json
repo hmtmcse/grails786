@@ -11,7 +11,7 @@
     "modules/*"
   ],
   "scripts": {
-    "start-bl-template": "webpack-dev-server",
+    "start-bl-template": "lerna run start-bl-template --stream",
     "start-my-app": "lerna run start-my-app --stream",
     "start-app": "lerna run start-app --stream",
     "start": "lerna run start --stream"
