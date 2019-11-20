@@ -1,12 +1,5 @@
 import {TRListData, TRListDataHelper} from "react-mui-ui/ui/tr-ui-data";
-import {
-    AccountBoxIcon,
-    AddShoppingCartIcon,
-    AssignmentIcon, BarChartIcon,
-    ContactsIcon, DashboardIcon, PeopleIcon,
-    ReportIcon,
-    RowingIcon
-} from "react-mui-ui/ui/ui-component";
+import TRBrowserStorageManager from "tm-react/src/artifacts/manager/tr-browser-storage-manager";
 
 export default class AppNavigation {
 
@@ -20,13 +13,18 @@ export default class AppNavigation {
     }
 
     public static getNavigation(route: any): Array<TRListData> {
-        let nav: TRListDataHelper = TRListDataHelper.start("dashboard", "Dashboard", DashboardIcon, this.setAction(route, "/dashboard"));
-        nav.add("suspects", "Suspects", AssignmentIcon);
-        nav.add("opportunities", "Opportunities", AddShoppingCartIcon);
-        nav.add("accounts", "Accounts", PeopleIcon);
-        nav.add("contacts", "Contacts", ContactsIcon);
-        nav.add("users", "Users", RowingIcon, this.setAction(route, "/user"));
-        nav.add("reports", "Reports", BarChartIcon);
+        let menuObj = TRBrowserStorageManager.getAsJSON("navList");
+        let nav: TRListDataHelper = TRListDataHelper.start("dashboard", "Dashboard", "dashboard", this.setAction(route, "/dashboard"));
+        let _this = this;
+        if (menuObj){
+            menuObj.forEach(function (value: any) {
+                if (value.url !== ""){
+                    nav.add(value.name, value.displayName, value.icon, _this.setAction(route, value.url));
+                }else{
+                    nav.add(value.name, value.displayName, value.icon);
+                }
+            });
+        }
         return nav.getList();
     }
 }

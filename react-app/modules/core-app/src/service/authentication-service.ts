@@ -23,6 +23,17 @@ export default class AuthenticationService {
         let responseData = data.login;
         let accessToken = responseData.accessToken;
         let refreshToken = responseData.refreshToken;
+
+        let access = data.access;
+        let navList = data.navList;
+        if (access) {
+            TRBrowserStorageManager.addAsJSONString("access", access);
+        }
+
+        if (navList) {
+            TRBrowserStorageManager.addAsJSONString("navList", navList);
+        }
+
         if (accessToken && refreshToken) {
             TRBrowserStorageManager.add("accessToken", accessToken);
             TRBrowserStorageManager.add("refreshToken", refreshToken);
@@ -35,7 +46,11 @@ export default class AuthenticationService {
         if (this.addAuthorizationMetaData(responseData)) {
             TRBrowserStorageManager.add("isAuthorized", true);
             let user = responseData.user;
-            TRBrowserStorageManager.add("operatorName", user.firstName + " " + user.lastName);
+            let name = user.firstName;
+            if (user.lastName) {
+                name = " " + user.lastName
+            }
+            TRBrowserStorageManager.add("operatorName", name);
             TRBrowserStorageManager.addAsJSONString("apiData", responseData);
             return true;
         }

@@ -19,11 +19,6 @@ class PrivateLayout extends TRReactComponent<any, any> {
                 bodyContent={<TRLayoutRenderer route={route} appConfig={appConfig} component={component}/>}/>
             );
 
-        // if (!Boolean(TRBrowserStorageManager.getAsJSON("isAuthorized"))) {
-        //     renderView = (<Redirect to="/" />);
-        // }
-
-
         return (
             <React.Fragment>
                 {renderView}

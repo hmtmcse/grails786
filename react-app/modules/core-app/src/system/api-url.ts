@@ -8,4 +8,5 @@ export class ApiUrl {
     public static CHANGE_PASSWORD : string = "api/v1/user/update-password";
     public static USER_LIST: string = "api/v1/user/list";
     public static RENEW_TOKEN_URL: string = "api/v1/authentication/renew";
+    public static LOGOUT_URL: string = "api/v1/authentication/renew";
 }
