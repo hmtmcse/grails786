@@ -5,9 +5,7 @@ import {
     Avatar,
     Button,
     CssBaseline,
-    FormControl, FormHelperText, Grid,
-    Input,
-    InputLabel,
+    Grid,
     Paper, TextField,
     Typography,
     withStyles
@@ -90,14 +88,9 @@ class LoginView extends TRComponent<LoginUI, State> {
                         <Avatar className={classes.avatar} src={avatarImage}/>
                         <Typography variant="h5">Login Here</Typography>
                         <form onSubmit={(event:any) => {this.doLogin(event)}} className={classes.form} noValidate>
-
-
                             <TextField {...this.handleInputDataChange("email")} type="email" label="Email Address" margin="normal" fullWidth required/>
-
                             <TextField {...this.handleInputDataChange("password")} type="password" label="Password" margin="normal" fullWidth required/>
-
                             <Button type="submit" variant="contained" fullWidth color="primary" children="Login" className={classes.submit}/>
-
                             <Grid container style={{marginTop:20}}>
                                 <Grid item xs>
                                     <Link to="#" onClick={event => {TrUtil.gotoUrl(this, "/forgot-password")}} >
