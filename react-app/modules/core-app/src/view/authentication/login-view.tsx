@@ -85,8 +85,9 @@ class LoginView extends TRComponent<LoginUI, State> {
                 <CssBaseline/>
                 <main className={classes.layout}>
                     <Paper className={classes.paper}>
-                        {/*<Avatar className={classes.avatar} src={avatarImage}/>*/}
-                        <Typography variant="h5">Login Here</Typography>
+                        <Typography variant="h4">Grails 786</Typography>
+                        <br/>
+                        <Typography>Enter your login here</Typography>
                         <form onSubmit={(event:any) => {this.doLogin(event)}} className={classes.form} noValidate>
                             <TextField {...this.handleInputDataChange("email")} type="email" label="Email Address" margin="normal" fullWidth required/>
                             <TextField {...this.handleInputDataChange("password")} type="password" label="Password" margin="normal" fullWidth required/>

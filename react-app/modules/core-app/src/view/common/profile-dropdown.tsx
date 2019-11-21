@@ -25,9 +25,12 @@ interface Props extends TRProps {
 export default class ProfileDropdown extends TRComponent<Props, State> {
 
 
-    logoutAction(event:any){
+    logoutAction(event: any) {
         const _this = this;
-        _this.getToApi(ApiUtil.makeGetRequestUrl(ApiUrl.LOGOUT_URL,{key:"token", value: TRBrowserStorageManager.getByKey("refreshToken")}),
+        _this.getToApi(ApiUtil.makeGetRequestUrl(ApiUrl.LOGOUT_URL, {
+                key: "token",
+                value: TRBrowserStorageManager.getByKey("refreshToken")
+            }),
             {
                 callback(response: TRHTTResponse): void {
                     const responseData = ApiUtil.getResponseData(response);
@@ -37,30 +40,55 @@ export default class ProfileDropdown extends TRComponent<Props, State> {
                 }
             },
             {
-                callback(response: TRHTTResponse):void {
+                callback(response: TRHTTResponse): void {
                     TRBrowserStorageManager.clear();
                     TrUtil.gotoUrl(_this, "/");
                 }
             }
         );
+    }
+
+    profile(event: any) {
 
     }
 
+    changePassword(event: any) {
+
+    }
 
     render() {
         const _this = this;
         const dropdownAction = new TRDropdownDataHelper();
+        dropdownAction.add("profile", "Profile" , {
+            click(event: any, onClickData: any): void {
+                _this.profile(event);
+            }
+        });
+        dropdownAction.add("changePassword", "Change Password", {
+            click(event: any, onClickData: any): void {
+                _this.changePassword(event);
+            }
+        });
         dropdownAction.add("logout", "Logout", {
             click(event: any, onClickData: any): void {
                 _this.logoutAction(event);
             }
         });
 
+        const dropDownStyle: DropdownStyle = {
+            popper: {
+                style: {
+                    zIndex: 1201,
+                    marginTop: 3
+                }
+            }
+        };
+
         return (
             <React.Fragment>
-                <ButtonGroup variant="contained" color="primary">
+                <ButtonGroup variant="contained" color="primary" style={{zIndex:1500}}>
                     <Button>{TRBrowserStorageManager.getByKey("operatorName")}</Button>
-                    <TRDropdown clickIcon={ExpandMoreIcon} actions={dropdownAction.getList()}/>
+                    <TRDropdown dropdownStyle={dropDownStyle} clickIcon={ExpandMoreIcon} actions={dropdownAction.getList()}/>
                 </ButtonGroup>
             </React.Fragment>
         );

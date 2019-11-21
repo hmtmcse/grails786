@@ -7,10 +7,12 @@
     "@types/node": "^12.6.3",
     "@types/react": "^16.8.23",
     "@types/react-dom": "^16.8.4",
+    "@types/recharts": "^1.8.3",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-mui-ui": "^0.1.0",
     "react-scripts": "^3.0.1",
+    "recharts": "^1.8.5",
     "tm-react": "^0.1.0",
     "typescript": "3.5.3"
   },
