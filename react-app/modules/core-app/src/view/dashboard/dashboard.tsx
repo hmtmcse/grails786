@@ -88,7 +88,7 @@ export default class Dashboard extends TRComponent<Props, TRComponentState> {
                 <Grid container spacing={8}>
                     {/* Chart */}
                     <Grid item xs={12} md={8} lg={6}>
-                        <LineChart width={800} height={300} data={[
+                        <LineChart width={600} height={280} data={[
                             {name: 'Page A', uv: 400, pv: 2400, amt: 1111},
                             {name: 'Page B', uv: 150, pv: 1500, amt: 2400},
                             {name: 'Page C', uv: 100, pv: 4562, amt: 115},
@@ -102,12 +102,9 @@ export default class Dashboard extends TRComponent<Props, TRComponentState> {
                     {/* Recent Deposits */}
                     <Grid item xs={12} md={4} lg={6}>
                         <BarChart
-                            width={600}
-                            height={300}
-                            data={barChart}
-                            margin={{
-                                top: 5, right: 30, left: 20, bottom: 5,
-                            }}>
+                            width={500}
+                            height={280}
+                            data={barChart}>
                             <CartesianGrid strokeDasharray="3 3" />
                             <XAxis dataKey="name" />
                             <YAxis />
@@ -119,13 +116,9 @@ export default class Dashboard extends TRComponent<Props, TRComponentState> {
                     </Grid>
                     <Grid item xs={12} md={4} lg={6}>
                         <AreaChart
-                            width={800}
-                            height={400}
-                            data={xyz}
-                            margin={{
-                                top: 10, right: 30, left: 0, bottom: 0,
-                            }}
-                        >
+                            width={600}
+                            height={280}
+                            data={xyz}>
                             <CartesianGrid strokeDasharray="3 3" />
                             <XAxis dataKey="name" />
                             <YAxis />
