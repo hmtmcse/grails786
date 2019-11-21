@@ -2,19 +2,16 @@ import React from 'react';
 import TRComponent from "tm-react/src/artifacts/component/tr-component";
 import TRComponentState from "tm-react/src/artifacts/component/tr-component-state";
 import {TRProps} from "tm-react/src/artifacts/model/tr-model";
-import {Grid, Paper} from "react-mui-ui/ui/ui-component";
-import {classes} from "istanbul-lib-coverage";
+import {Grid} from "react-mui-ui/ui/ui-component";
 import {
     Area,
     AreaChart,
     Bar,
     BarChart,
-    CartesianGrid, Cell,
-    Label,
+    CartesianGrid,
     Legend,
     Line,
-    LineChart, Pie, PieChart, RadialBar, RadialBarChart,
-    ResponsiveContainer,
+    LineChart,
     Tooltip,
     XAxis,
     YAxis
@@ -25,20 +22,9 @@ interface Props extends TRProps {
     route: any;
 }
 
-const data = [
-     ['00:00', 0],
-     ['03:00', 300],
-     ['06:00', 600],
-     ['09:00', 800],
-     ['12:00', 1500],
-     ['15:00', 2000],
-     ['18:00', 2400],
-     ['21:00', 2400],
-     ['24:00', undefined],
-];
 
 
-class Dashboard extends TRComponent<Props, TRComponentState> {
+export default class Dashboard extends TRComponent<Props, TRComponentState> {
 
     state: TRComponentState = new TRComponentState();
     componentDidMount() {}
@@ -47,12 +33,6 @@ class Dashboard extends TRComponent<Props, TRComponentState> {
 
 
     renderUI() {
-        let lineChart = [
-            {'00:00': 0},
-            {'03:00': 300},
-            {'06:00': 600},
-            {'09:00': 800},
-        ];
 
         const barChart = [
             {
@@ -77,21 +57,6 @@ class Dashboard extends TRComponent<Props, TRComponentState> {
                 name: 'Page G', uv: 3490, pv: 4300, amt: 2100,
             },
         ];
-
-        const {route} = this.props;
-
-        const data = [
-            { name: 'Group A', value: 400 },
-            { name: 'Group B', value: 300 },
-            { name: 'Group C', value: 300 },
-            { name: 'Group D', value: 200 },
-        ];
-
-        const style = {
-            top: 0,
-            left: 350,
-            lineHeight: '24px',
-        };
 
 
         const xyz = [
@@ -172,5 +137,3 @@ class Dashboard extends TRComponent<Props, TRComponentState> {
             </React.Fragment>);
     }
 }
-
-export default Dashboard;
