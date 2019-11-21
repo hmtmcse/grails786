@@ -12,7 +12,6 @@ import {
 } from "react-mui-ui/ui/ui-component";
 import {LoginLayoutJss} from "../../assets/login-layout-jss";
 import {TRProps} from "tm-react/src/artifacts/model/tr-model";
-// import avatarImage from 'core-app/assets/images/logo.jpg';
 import {TrFormDefinitionData} from "tm-react/src/artifacts/data/tr-form-definition-data";
 import {Link} from "react-router-dom";
 import APIHelper from "../../system/api-helper";
@@ -21,6 +20,7 @@ import TRHTTResponse from "tm-react/src/artifacts/processor/http/tr-http-respons
 import {TrUtil} from "tm-react/src/artifacts/util/tr-util";
 import {AppConstant} from "../../system/app-constant";
 import AuthenticationService from "../../service/authentication-service";
+import {AppMessage} from "../../system/app-message";
 
 interface LoginUI extends TRProps {
     classes: any;
@@ -85,9 +85,8 @@ class LoginView extends TRComponent<LoginUI, State> {
                 <CssBaseline/>
                 <main className={classes.layout}>
                     <Paper className={classes.paper}>
-                        <Typography variant="h4">Grails 786</Typography>
+                        <Typography variant="h4">{AppMessage.loginLabel}</Typography>
                         <br/>
-                        <Typography>Enter your login here</Typography>
                         <form onSubmit={(event:any) => {this.doLogin(event)}} className={classes.form} noValidate>
                             <TextField {...this.handleInputDataChange("email")} type="email" label="Email Address" margin="normal" fullWidth required/>
                             <TextField {...this.handleInputDataChange("password")} type="password" label="Password" margin="normal" fullWidth required/>
