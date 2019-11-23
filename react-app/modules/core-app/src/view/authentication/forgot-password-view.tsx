@@ -49,7 +49,6 @@ class ForgotPasswordView extends TRComponent<ForgotPasswordViewProps, TRComponen
                 {
                     callback(response: TRHTTResponse): void {
                         let apiResponse = APIHelper.processSuccessResponse(response, _this);
-                        console.log(apiResponse);
                         if (apiResponse.status === AppConstant.STATUS_SUCCESS && apiResponse.data.token) {
                             AuthenticationService.instance().processLoginToken(apiResponse.data);
                             _this.successRedirect("/", "Reset Email has been sent.")
@@ -58,7 +57,6 @@ class ForgotPasswordView extends TRComponent<ForgotPasswordViewProps, TRComponen
                 },
                 {
                     callback(response: TRHTTResponse): void {
-                        console.log(response);
                         APIHelper.processErrorResponse(response, _this);
                     }
                 }
