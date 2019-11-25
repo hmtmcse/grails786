@@ -1,6 +1,8 @@
 import TRComponentState from "tm-react/src/artifacts/component/tr-component-state";
 import SystemConfig from "./system-config";
 import {AppConstant} from "./app-constant";
+import TRHTTResponse from "tm-react/src/artifacts/processor/http/tr-http-response";
+import {AppMessage} from "./app-message";
 
 
 export const ApiUtil = {
@@ -42,6 +44,50 @@ export const ApiUtil = {
 
         return url;
     },
+
+    processApiResponse: (response: TRHTTResponse, component: any) =>{
+        if (!response.isSuccess || !response.responseData) {
+            let message = AppMessage.unableToCommunicate;
+            if (response.responseData.message){
+                message = response.responseData.message;
+            }
+            component.showErrorFlash(message);
+        } else {
+            return response.responseData;
+        }
+    },
+
+    processApiErrorResponse: (response: TRHTTResponse, component: any) =>{
+        if (!response.isSuccess && response.message) {
+            component.showErrorFlash(response.message);
+        } else {
+            let message = AppMessage.unableToCommunicate;
+            if (response.responseData.message){
+                let data = response.responseData.message;
+                if (typeof data === 'string' || data instanceof String){
+                    message = response.responseData.message;
+                }
+            }
+            component.showErrorFlash(message);
+        }
+    },
+
+    processApiResponseAndShowError: (response: TRHTTResponse, component: any) =>{
+        let apiResponse = ApiUtil.processApiResponse(response, component);
+        if (apiResponse.status == AppConstant.STATUS_ERROR && apiResponse.error && apiResponse.error.message){
+            component.showErrorFlash(apiResponse.error.message);
+            return null;
+        }else{
+            return apiResponse;
+        }
+    },
+
+    processApiResponseError: (responseData: any, component: any) =>{
+        if (responseData && responseData.status == AppConstant.STATUS_ERROR && responseData.error && responseData.error.fields.length !== 0){
+            component.validateApiResponseData(responseData.error.fields);
+        }
+    },
+
     sortAndPagination: (field: string, order: string) =>{
         let sort: { [key: string]: any } = {};
         if (field && order) {

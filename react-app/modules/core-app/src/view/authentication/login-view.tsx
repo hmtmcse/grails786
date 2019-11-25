@@ -2,7 +2,6 @@ import React from 'react';
 import TRComponent from "tm-react/src/artifacts/component/tr-component";
 import TRComponentState from "tm-react/src/artifacts/component/tr-component-state";
 import {
-    Avatar,
     Button,
     CssBaseline,
     Grid,
@@ -14,13 +13,13 @@ import {LoginLayoutJss} from "../../assets/login-layout-jss";
 import {TRProps} from "tm-react/src/artifacts/model/tr-model";
 import {TrFormDefinitionData} from "tm-react/src/artifacts/data/tr-form-definition-data";
 import {Link} from "react-router-dom";
-import APIHelper from "../../system/api-helper";
 import {ApiUrl} from "../../system/api-url";
 import TRHTTResponse from "tm-react/src/artifacts/processor/http/tr-http-response";
 import {TrUtil} from "tm-react/src/artifacts/util/tr-util";
 import {AppConstant} from "../../system/app-constant";
 import AuthenticationService from "../../service/authentication-service";
 import {AppMessage} from "../../system/app-message";
+import {ApiUtil} from "../../system/api-util";
 
 interface LoginUI extends TRProps {
     classes: any;
@@ -62,7 +61,7 @@ class LoginView extends TRComponent<LoginUI, State> {
             this.postJsonToApi(ApiUrl.LOGIN_URL, this.state.formData,
                 {
                     callback(response: TRHTTResponse): void {
-                        let apiResponse = APIHelper.processSuccessResponseWithApi(response, _this);
+                        let apiResponse = ApiUtil.processApiResponseAndShowError(response, _this);
                         if (apiResponse && apiResponse.status === AppConstant.STATUS_SUCCESS && apiResponse.data.login.accessToken) {
                             AuthenticationService.instance().processLoginToken(apiResponse.data);
                             TrUtil.gotoUrl(_this, "/dashboard");
@@ -71,7 +70,7 @@ class LoginView extends TRComponent<LoginUI, State> {
                 },
                 {
                     callback(response: TRHTTResponse): void {
-                        APIHelper.processErrorResponse(response, _this);
+                        ApiUtil.processApiErrorResponse(response, _this);
                     }
                 }
             );

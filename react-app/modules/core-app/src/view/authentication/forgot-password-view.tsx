@@ -2,10 +2,9 @@ import React from 'react';
 import TRComponent from "tm-react/src/artifacts/component/tr-component";
 import TRComponentState from "tm-react/src/artifacts/component/tr-component-state";
 import {
-    Avatar,
     Button,
     CssBaseline,
-    FormControl, FormHelperText, Grid,
+    FormControl,
     Input,
     InputLabel,
     Paper,
@@ -21,6 +20,7 @@ import TRHTTResponse from "tm-react/src/artifacts/processor/http/tr-http-respons
 import {TrUtil} from "tm-react/src/artifacts/util/tr-util";
 import {AppConstant} from "../../system/app-constant";
 import AuthenticationService from "../../service/authentication-service";
+import {ApiUtil} from "../../system/api-util";
 
 interface ForgotPasswordViewProps extends TRProps {
     classes: any;
@@ -48,7 +48,7 @@ class ForgotPasswordView extends TRComponent<ForgotPasswordViewProps, TRComponen
             this.postJsonToApi(ApiUrl.RESET_PASSWORD, APIHelper.requestDataMaker(this.state.formData),
                 {
                     callback(response: TRHTTResponse): void {
-                        let apiResponse = APIHelper.processSuccessResponse(response, _this);
+                        let apiResponse = ApiUtil.processApiResponse(response, _this);
                         if (apiResponse.status === AppConstant.STATUS_SUCCESS && apiResponse.data.token) {
                             AuthenticationService.instance().processLoginToken(apiResponse.data);
                             _this.successRedirect("/", "Reset Email has been sent.")
@@ -57,7 +57,7 @@ class ForgotPasswordView extends TRComponent<ForgotPasswordViewProps, TRComponen
                 },
                 {
                     callback(response: TRHTTResponse): void {
-                        APIHelper.processErrorResponse(response, _this);
+                        ApiUtil.processApiErrorResponse(response, _this);
                     }
                 }
             );

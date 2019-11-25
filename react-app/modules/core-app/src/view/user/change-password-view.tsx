@@ -19,6 +19,7 @@ import APIHelper from "../../system/api-helper";
 import TRHTTResponse from "tm-react/src/artifacts/processor/http/tr-http-response";
 import {AppConstant} from "../../system/app-constant";
 import {TrUtil} from "tm-react/src/artifacts/util/tr-util";
+import {ApiUtil} from "../../system/api-util";
 
 
 interface Props extends TRProps {
@@ -63,7 +64,7 @@ class ChangePasswordView extends TRComponent<Props, State> {
                 this.putJsonToApi(ApiUrl.CHANGE_PASSWORD, APIHelper.requestDataMaker(this.state.formData),
                     {
                         callback(response: TRHTTResponse): void {
-                            let apiResponse = APIHelper.processSuccessResponse(response, _this);
+                            let apiResponse = ApiUtil.processApiResponse(response, _this);
                             if (apiResponse.status === AppConstant.STATUS_SUCCESS) {
                                 _this.successRedirect( "/user", apiResponse.message);
                             }
@@ -71,7 +72,7 @@ class ChangePasswordView extends TRComponent<Props, State> {
                     },
                     {
                         callback(response: TRHTTResponse): void {
-                            APIHelper.processErrorResponse(response, _this);
+                            ApiUtil.processApiErrorResponse(response, _this);
                         }
                     }
                 );

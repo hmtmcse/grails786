@@ -4,7 +4,6 @@ import TRComponentState from "tm-react/src/artifacts/component/tr-component-stat
 import {TRProps} from "tm-react/src/artifacts/model/tr-model";
 import {ApiUrl} from "../../system/api-url";
 import TRHTTResponse from "tm-react/src/artifacts/processor/http/tr-http-response";
-import APIHelper from "../../system/api-helper";
 import {
     Button,
     Paper,
@@ -19,7 +18,6 @@ import {
 import {viewCommon} from "../../assets/style-jss";
 import TRTableHeader, {SortDirection} from "react-mui-ui/ui/tr-table-header";
 import {Align, TRTableActionDataHelper, TRTableHeaderDataHelper} from "react-mui-ui/ui/tr-ui-data";
-import TRTableAction from "react-mui-ui/ui/tr-table-action";
 import {TrUtil} from "tm-react/src/artifacts/util/tr-util";
 import TRPagination from "react-mui-ui/ui/tr-pagination";
 import {ApiUtil} from "../../system/api-util";
@@ -57,7 +55,7 @@ class UserListView extends TRComponent<Props, UserListViewState> {
         this.postJsonToApi(ApiUrl.USER_LIST, ApiUtil.getSortAndPaginationData(this.state),
             {
                 callback(response: TRHTTResponse): void {
-                    let apiResponse = APIHelper.processSuccessResponseWithApi(response, _this);
+                    let apiResponse = ApiUtil.processApiResponseAndShowError(response, _this);
                     let list = [];
                     if (apiResponse && apiResponse.data) {
                         list = apiResponse.data;
@@ -76,7 +74,7 @@ class UserListView extends TRComponent<Props, UserListViewState> {
             },
             {
                 callback(response: TRHTTResponse): void {
-                    APIHelper.processErrorResponse(response, _this);
+                    ApiUtil.processApiErrorResponse(response, _this);
                 }
             }
         );
@@ -86,11 +84,17 @@ class UserListView extends TRComponent<Props, UserListViewState> {
         const {classes} = this.props;
         const _this = this;
         let tableAction: TRTableActionDataHelper = TRTableActionDataHelper.start("Details", "");
-        tableAction.addAction("Reset Password");
-        tableAction.addAction("Change Password").setAction({click(event: any, onClickData: any): void {
-            console.log("Reset");
-               _this.redirect("/user/change-password")
-            }});
+        tableAction.addAction("Edit").setAction({
+            click(event: any, onClickData: any): void {
+                _this.redirect("/user/change-password")
+            }
+        });
+        tableAction.addAction("Reset Password").setAction({
+            click(event: any, onClickData: any): void {
+                _this.redirect("/user/change-password")
+            }
+        });
+
 
 
 
