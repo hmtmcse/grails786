@@ -20,6 +20,7 @@ export class UserUrlMapping {
         ACTIVE_INACTIVE: "api/v1/user/activeInactive",
         CHANGE_PASSWORD: "api/v1/user/change-password",
         RESET_PASSWORD: "api/v1/user/reset-password",
+        ACCESS_GROUP_LIST: "api/v1/accessGroup/groupList",
     };
 
 

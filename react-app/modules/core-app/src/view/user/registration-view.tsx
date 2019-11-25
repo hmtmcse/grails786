@@ -12,6 +12,7 @@ import {AppConstant} from "../../system/app-constant";
 import {ApiUtil} from "../../system/api-util";
 import {TRMessageData} from "tm-react/src/artifacts/data/tr-message-data";
 import {UserUrlMapping} from "./user-url-mapping";
+import TRReactSelect from "react-mui-ui/ui/tr-react-select";
 
 
 interface Props extends TRProps {
@@ -23,6 +24,7 @@ class State extends TRComponentState{
     submitUrl: string = UserUrlMapping.API.CREATE;
     formHeading: string = "Create User";
     buttonLabel: string = "Save";
+    accessGroups: Array<object> = [];
 }
 
 class RegistrationView extends TRComponent<Props, State> {
@@ -63,6 +65,7 @@ class RegistrationView extends TRComponent<Props, State> {
 
     componentDidMount() {
         this.showRedirectMessage();
+        this.loadAccessGroup();
         let uuid = ApiUtil.getParamsDataFromRouter(this.props.route, "uuid");
         if (uuid){
             this.setState({
@@ -74,6 +77,30 @@ class RegistrationView extends TRComponent<Props, State> {
             this.loadFormData(uuid);
         }
     }
+
+
+    loadAccessGroup() {
+        const _this = this;
+        let message = "Invalid Access Group";
+        this.getToApi(UserUrlMapping.API.ACCESS_GROUP_LIST,
+            {
+                callback(response: TRHTTResponse): void {
+                    let apiResponse = ApiUtil.processApiResponseAndShowError(response, _this);
+                    if (apiResponse && apiResponse.status === AppConstant.STATUS_SUCCESS) {
+                        _this.setState({accessGroups: apiResponse.data})
+                    } else {
+                        _this.failedRedirect(UserUrlMapping.ui.list, message);
+                    }
+                }
+            },
+            {
+                callback(response: TRHTTResponse): void {
+                    _this.failedRedirect(UserUrlMapping.ui.list, message);
+                }
+            }
+        );
+    }
+
 
     loadFormData(uuid: any) {
         const _this = this;
@@ -146,6 +173,7 @@ class RegistrationView extends TRComponent<Props, State> {
                                 {
                                     this.state.isEdit ? "" : (<Grid item xs={6} component="div"><TextField {...this.handleInputDataChange("password")} type="password" label="Password" margin="normal" fullWidth /></Grid>)
                                 }
+                                <Grid item xs={6} component="div"><TRReactSelect {...this.handleInputDataChange("accessGroup")} label="Access Group" options={this.state.accessGroups} optionLabel="name" optionValue="id" /></Grid>
                             </Grid>
                         </CardContent>
                         <CardActions>
