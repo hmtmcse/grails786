@@ -2,7 +2,6 @@ import React from 'react';
 import TRComponent from "tm-react/src/artifacts/component/tr-component";
 import TRComponentState from "tm-react/src/artifacts/component/tr-component-state";
 import {TRProps} from "tm-react/src/artifacts/model/tr-model";
-import {ApiUrl} from "../../system/api-url";
 import TRHTTResponse from "tm-react/src/artifacts/processor/http/tr-http-response";
 import {
     Button,
@@ -17,12 +16,13 @@ import {
 } from "react-mui-ui/ui/ui-component";
 import {viewCommon} from "../../assets/style-jss";
 import TRTableHeader, {SortDirection} from "react-mui-ui/ui/tr-table-header";
-import {Align, TRTableActionDataHelper, TRTableHeaderDataHelper} from "react-mui-ui/ui/tr-ui-data";
+import {Align, TRTableActionData, TRTableActionDataHelper, TRTableHeaderDataHelper} from "react-mui-ui/ui/tr-ui-data";
 import {TrUtil} from "tm-react/src/artifacts/util/tr-util";
 import TRPagination from "react-mui-ui/ui/tr-pagination";
 import {ApiUtil} from "../../system/api-util";
 import SystemConfig from "../../system/system-config";
 import CaTableAction from "../../override/ca-table-action";
+import {UserUrlMapping} from "./user-url-mapping";
 
 
 interface Props extends TRProps {
@@ -52,7 +52,7 @@ class UserListView extends TRComponent<Props, UserListViewState> {
 
     public loadData(data: object = {}) {
         const _this = this;
-        this.postJsonToApi(ApiUrl.USER_LIST, ApiUtil.getSortAndPaginationData(this.state),
+        this.postJsonToApi(UserUrlMapping.API.LIST, ApiUtil.getSortAndPaginationData(this.state),
             {
                 callback(response: TRHTTResponse): void {
                     let apiResponse = ApiUtil.processApiResponseAndShowError(response, _this);
@@ -80,23 +80,30 @@ class UserListView extends TRComponent<Props, UserListViewState> {
         );
     }
 
+    tableActions(component: any, rowData: any): Map<string, TRTableActionData> {
+        let tableAction: TRTableActionDataHelper = TRTableActionDataHelper.start("Details", "");
+        tableAction.addAction("Edit").setCallbackData(rowData).setAction({
+            click(event: any, onClickData: any): void {
+                let data = {
+                    id: onClickData.id,
+                    isEdit: true,
+                };
+                component.redirectWithData(UserUrlMapping.ui.create, data)
+            }
+        });
+
+        tableAction.addAction("Reset Password").setCallbackData(rowData).setAction({
+            click(event: any, onClickData: any): void {
+                component.redirect(UserUrlMapping.ui.resetPassword)
+            }
+        });
+
+        return tableAction.getMap()
+    }
+
     renderUI() {
         const {classes} = this.props;
         const _this = this;
-        let tableAction: TRTableActionDataHelper = TRTableActionDataHelper.start("Details", "");
-        tableAction.addAction("Edit").setAction({
-            click(event: any, onClickData: any): void {
-                _this.redirect("/user/change-password")
-            }
-        });
-        tableAction.addAction("Reset Password").setAction({
-            click(event: any, onClickData: any): void {
-                _this.redirect("/user/change-password")
-            }
-        });
-
-
-
 
         return (
             <React.Fragment>
@@ -121,13 +128,13 @@ class UserListView extends TRComponent<Props, UserListViewState> {
                             orderBy={this.state.orderBy}
                             sortDirection={this.state.sortDirection}/>
                         <TableBody>
-                            {this.state.list.map((row: any, index:any) => (
-                                <TableRow key={index} >
+                            {this.state.list.map((row: any, index: any) => (
+                                <TableRow key={index}>
                                     <TableCell align="left">{row.firstName}</TableCell>
                                     <TableCell align="left">{row.lastName}</TableCell>
                                     <TableCell align="left">{row.email}</TableCell>
                                     <TableCell align="right">
-                                        <CaTableAction actions={tableAction.getMap()}/>
+                                        <CaTableAction actions={this.tableActions(_this, row)}/>
                                     </TableCell>
                                 </TableRow>
                             ))}

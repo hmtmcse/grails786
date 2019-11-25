@@ -14,7 +14,6 @@ import {
 import {LoginLayoutJss} from "../../assets/login-layout-jss";
 import {TRProps} from "tm-react/src/artifacts/model/tr-model";
 import {TrFormDefinitionData} from "tm-react/src/artifacts/data/tr-form-definition-data";
-import APIHelper from "../../system/api-helper";
 import {ApiUrl} from "../../system/api-url";
 import TRHTTResponse from "tm-react/src/artifacts/processor/http/tr-http-response";
 import {TrUtil} from "tm-react/src/artifacts/util/tr-util";
@@ -45,7 +44,7 @@ class ForgotPasswordView extends TRComponent<ForgotPasswordViewProps, TRComponen
         if (!this.validateFormInput()) {
             this.showErrorFlash("Please enter your email.");
         } else {
-            this.postJsonToApi(ApiUrl.RESET_PASSWORD, APIHelper.requestDataMaker(this.state.formData),
+            this.postJsonToApi(ApiUrl.RESET_PASSWORD, this.state.formData,
                 {
                     callback(response: TRHTTResponse): void {
                         let apiResponse = ApiUtil.processApiResponse(response, _this);

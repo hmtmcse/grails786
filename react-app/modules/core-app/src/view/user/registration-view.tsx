@@ -7,10 +7,11 @@ import {
 import {TRProps} from "tm-react/src/artifacts/model/tr-model";
 import {TrUtil} from "tm-react/src/artifacts/util/tr-util";
 import {TrFormDefinitionData} from "tm-react/src/artifacts/data/tr-form-definition-data";
-import {ApiUrl} from "../../system/api-url";
 import TRHTTResponse from "tm-react/src/artifacts/processor/http/tr-http-response";
 import {AppConstant} from "../../system/app-constant";
 import {ApiUtil} from "../../system/api-util";
+import {TRMessageData} from "tm-react/src/artifacts/data/tr-message-data";
+import {UserUrlMapping} from "./user-url-mapping";
 
 
 interface Props extends TRProps {
@@ -27,20 +28,20 @@ class RegistrationView extends TRComponent<Props, State> {
 
     constructor(props: Props) {
         super(props);
-        // this.addFormDefinition("email", new TrFormDefinitionData({
-        //     required: true,
-        //     customValidation:{validate(fieldName: string, value: any, formData: { [p: string]: any }): TRMessageData {
-        //             if (!value){
-        //                 return TRMessageData.failed("Please Enter Email Address")
-        //             }
-        //             let regex = new RegExp('^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$');
-        //             if (regex.test(value))
-        //             {
-        //                 return TRMessageData.success("");
-        //             }
-        //             return TRMessageData.failed("You have entered an invalid email address!")
-        //         }}
-        // }));
+        this.addFormDefinition("email", new TrFormDefinitionData({
+            required: true,
+            customValidation:{validate(fieldName: string, value: any, formData: { [p: string]: any }): TRMessageData {
+                    if (!value){
+                        return TRMessageData.failed("Please Enter Email Address")
+                    }
+                    let regex = new RegExp('^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$');
+                    if (regex.test(value))
+                    {
+                        return TRMessageData.success("");
+                    }
+                    return TRMessageData.failed("You have entered an invalid email address!")
+                }}
+        }));
         this.addFormDefinition("firstName", new TrFormDefinitionData({
             required: true,
             errorMessage: "Please Enter First Name",
@@ -54,17 +55,27 @@ class RegistrationView extends TRComponent<Props, State> {
 
     }
 
+    componentDidMount() {
+        this.showRedirectMessage();
+        let redirectData = this.getRedirectData();
+        if (redirectData && redirectData.isEdit){
+            console.log("Edit")
+        }
+        console.log(redirectData)
+    }
+
+
 
     onSubmit (event: any){
         event.preventDefault();
         const _this = this;
         if (this.validateFormInput()) {
-            this.postJsonToApi(ApiUrl.USER_REGISTER, this.state.formData,
+            this.postJsonToApi(UserUrlMapping.API.CREATE, this.state.formData,
                 {
                     callback(response: TRHTTResponse): void {
                         let apiResponse = ApiUtil.processApiResponse(response, _this);
                         if (apiResponse && apiResponse.status === AppConstant.STATUS_SUCCESS) {
-                            _this.successRedirect( "/user", apiResponse.message);
+                            _this.successRedirect(UserUrlMapping.ui.list, apiResponse.message);
                         }else{
                             ApiUtil.processApiResponseError(apiResponse, _this);
                         }
@@ -99,7 +110,7 @@ class RegistrationView extends TRComponent<Props, State> {
                                 <Grid component="div" item xs={1}>
                                     <Button size="small" color="primary" type="submit" fullWidth variant="contained" children="save"/></Grid>
                                 <Grid component="div" item xs={1}>
-                                    <Button color="secondary" size="small" fullWidth variant="contained" children="Cancel" onClick={(event:any) => {TrUtil.gotoUrl(_this, "/user")}}/></Grid>
+                                    <Button color="secondary" size="small" fullWidth variant="contained" children="Cancel" onClick={(event:any) => {TrUtil.gotoUrl(_this, UserUrlMapping.ui.list)}}/></Grid>
                             </Grid>
                         </CardActions>
                     </form>

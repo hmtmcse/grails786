@@ -2,24 +2,17 @@ import React from 'react';
 import TRComponent from "tm-react/src/artifacts/component/tr-component";
 import TRComponentState from "tm-react/src/artifacts/component/tr-component-state";
 import {
-    Avatar,
     Button, Card, CardActions, CardContent, CardHeader,
-    CssBaseline,
-    FormControl, FormHelperText, Grid,
-    Input,
-    InputLabel,
-    Paper, TextField,
-    Typography,
-    withStyles
+    Grid,
+    TextField,
 } from "react-mui-ui/ui/ui-component";
 import {TRProps} from "tm-react/src/artifacts/model/tr-model";
 import {TrFormDefinitionData} from "tm-react/src/artifacts/data/tr-form-definition-data";
-import {ApiUrl} from "../../system/api-url";
-import APIHelper from "../../system/api-helper";
 import TRHTTResponse from "tm-react/src/artifacts/processor/http/tr-http-response";
 import {AppConstant} from "../../system/app-constant";
 import {TrUtil} from "tm-react/src/artifacts/util/tr-util";
 import {ApiUtil} from "../../system/api-util";
+import {UserUrlMapping} from "./user-url-mapping";
 
 
 interface Props extends TRProps {
@@ -61,7 +54,7 @@ class ChangePasswordView extends TRComponent<Props, State> {
             if (this.state.formData.new_password !== this.state.formData.confirm_new_password) {
                 _this.showErrorFlash("New Password and confirm password not matched.")
             }else{
-                this.putJsonToApi(ApiUrl.CHANGE_PASSWORD, APIHelper.requestDataMaker(this.state.formData),
+                this.putJsonToApi(UserUrlMapping.API.CHANGE_PASSWORD, this.state.formData,
                     {
                         callback(response: TRHTTResponse): void {
                             let apiResponse = ApiUtil.processApiResponse(response, _this);
