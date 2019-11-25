@@ -3,7 +3,7 @@ import TRLayoutInfoData from "tm-react/src/artifacts/data/view/tr-layout-info-da
 import TRURLMapping from "tm-react/src/artifacts/config/tr-url-mapping";
 import PublicLayout from "../view/layouts/public-layout";
 import PrivateLayout from "../view/layouts/private-layout";
-import {UserUrlMapping} from "../view/user/user-url-mapping";
+import UserUrlMapping from "../view/user/user-url-mapping";
 
 
 

@@ -12,7 +12,7 @@ import TRHTTResponse from "tm-react/src/artifacts/processor/http/tr-http-respons
 import {AppConstant} from "../../system/app-constant";
 import {TrUtil} from "tm-react/src/artifacts/util/tr-util";
 import {ApiUtil} from "../../system/api-util";
-import {UserUrlMapping} from "./user-url-mapping";
+import UserUrlMapping from "./user-url-mapping";
 
 
 interface Props extends TRProps {

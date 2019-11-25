@@ -11,8 +11,8 @@ import TRHTTResponse from "tm-react/src/artifacts/processor/http/tr-http-respons
 import {AppConstant} from "../../system/app-constant";
 import {ApiUtil} from "../../system/api-util";
 import {TRMessageData} from "tm-react/src/artifacts/data/tr-message-data";
-import {UserUrlMapping} from "./user-url-mapping";
 import TRReactSelect from "react-mui-ui/ui/tr-react-select";
+import UserUrlMapping from "./user-url-mapping";
 
 
 interface Props extends TRProps {

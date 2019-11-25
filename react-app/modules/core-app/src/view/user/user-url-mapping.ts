@@ -9,7 +9,7 @@ const UserDetailsView = React.lazy(() => import('./user-details-view'));
 const ChangePasswordView = React.lazy(() => import('./change-password-view'));
 
 
-export class UserUrlMapping {
+export default class UserUrlMapping {
 
     public static API = {
         LIST: "api/v1/user/list",

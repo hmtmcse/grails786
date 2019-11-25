@@ -22,7 +22,7 @@ import TRPagination from "react-mui-ui/ui/tr-pagination";
 import {ApiUtil} from "../../system/api-util";
 import SystemConfig from "../../system/system-config";
 import CaTableAction from "../../override/ca-table-action";
-import {UserUrlMapping} from "./user-url-mapping";
+import UserUrlMapping from "./user-url-mapping";
 
 
 interface Props extends TRProps {
