@@ -84,11 +84,7 @@ class UserListView extends TRComponent<Props, UserListViewState> {
         let tableAction: TRTableActionDataHelper = TRTableActionDataHelper.start("Details", "");
         tableAction.addAction("Edit").setCallbackData(rowData).setAction({
             click(event: any, onClickData: any): void {
-                let data = {
-                    id: onClickData.id,
-                    isEdit: true,
-                };
-                component.redirectWithData(UserUrlMapping.ui.create, data)
+                component.redirectWithData(UserUrlMapping.ui.create + "/" + onClickData.uuid, {})
             }
         });
 
@@ -97,6 +93,18 @@ class UserListView extends TRComponent<Props, UserListViewState> {
                 component.redirect(UserUrlMapping.ui.resetPassword)
             }
         });
+
+        tableAction.addAction("Active").setCallbackData(rowData).setAction({
+            click(event: any, onClickData: any): void {
+                component.redirect(UserUrlMapping.ui.resetPassword)
+            }
+        }).addConfirmation();
+
+        tableAction.addAction("Delete").setCallbackData(rowData).setAction({
+            click(event: any, onClickData: any): void {
+                component.redirect(UserUrlMapping.ui.resetPassword)
+            }
+        }).addConfirmation();
 
         return tableAction.getMap()
     }

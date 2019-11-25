@@ -19,7 +19,10 @@ interface Props extends TRProps {
 }
 
 class State extends TRComponentState{
-
+    isEdit: boolean = false;
+    submitUrl: string = UserUrlMapping.API.CREATE;
+    formHeading: string = "Create User";
+    buttonLabel: string = "Save";
 }
 
 class RegistrationView extends TRComponent<Props, State> {
@@ -34,7 +37,7 @@ class RegistrationView extends TRComponent<Props, State> {
                     if (!value){
                         return TRMessageData.failed("Please Enter Email Address")
                     }
-                    let regex = new RegExp('^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$');
+                    let regex = new RegExp('^(([^<>()\\[\\]\\\\.,;:\\s@"]+(\\.[^<>()\\[\\]\\\\.,;:\\s@"]+)*)|(".+"))@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$');
                     if (regex.test(value))
                     {
                         return TRMessageData.success("");
@@ -47,36 +50,72 @@ class RegistrationView extends TRComponent<Props, State> {
             errorMessage: "Please Enter First Name",
 
         }));
-        this.addFormDefinition("password", new TrFormDefinitionData({
-            required: true,
-            errorMessage: "Please Enter Password.",
 
-        }));
+        let uuid = ApiUtil.getParamsDataFromRouter(this.props.route, "uuid");
+        if (!uuid){
+            this.addFormDefinition("password", new TrFormDefinitionData({
+                required: true,
+                errorMessage: "Please Enter Password.",
 
+            }));
+        }
     }
 
     componentDidMount() {
         this.showRedirectMessage();
-        let redirectData = this.getRedirectData();
-        if (redirectData && redirectData.isEdit){
-            console.log("Edit")
+        let uuid = ApiUtil.getParamsDataFromRouter(this.props.route, "uuid");
+        if (uuid){
+            this.setState({
+                isEdit: true,
+                formHeading: "Update User",
+                buttonLabel: "Update",
+            });
+            this.state.submitUrl = UserUrlMapping.API.UPDATE;
+            this.loadFormData(uuid);
         }
-        console.log(redirectData)
+    }
+
+    loadFormData(uuid: any) {
+        const _this = this;
+        let filter = {
+            where: {
+                equal: {"uuid": uuid}
+            }
+        };
+        let message = "Invalid Data";
+        this.postJsonToApi(UserUrlMapping.API.DETAILS, filter,
+            {
+                callback(response: TRHTTResponse): void {
+                    let apiResponse = ApiUtil.processApiResponseAndShowError(response, _this);
+                    if (apiResponse && apiResponse.status === AppConstant.STATUS_SUCCESS && !ApiUtil.isEmptyObject(apiResponse.data)) {
+                        let data = apiResponse.data;
+                        data["where"] = filter.where;
+                        _this.setState({formData: data})
+                    } else {
+                        _this.failedRedirect(UserUrlMapping.ui.list, message);
+                    }
+                }
+            },
+            {
+                callback(response: TRHTTResponse): void {
+                    _this.failedRedirect(UserUrlMapping.ui.list, message);
+                }
+            }
+        );
     }
 
 
-
-    onSubmit (event: any){
+    onSubmit(event: any) {
         event.preventDefault();
         const _this = this;
         if (this.validateFormInput()) {
-            this.postJsonToApi(UserUrlMapping.API.CREATE, this.state.formData,
+            this.postJsonToApi(this.state.submitUrl, this.state.formData,
                 {
                     callback(response: TRHTTResponse): void {
                         let apiResponse = ApiUtil.processApiResponse(response, _this);
                         if (apiResponse && apiResponse.status === AppConstant.STATUS_SUCCESS) {
                             _this.successRedirect(UserUrlMapping.ui.list, apiResponse.message);
-                        }else{
+                        } else {
                             ApiUtil.processApiResponseError(apiResponse, _this);
                         }
                     }
@@ -87,6 +126,8 @@ class RegistrationView extends TRComponent<Props, State> {
                     }
                 }
             );
+        } else {
+            _this.showErrorFlash("Your Form Inputs are not valid.")
         }
     }
 
@@ -95,20 +136,22 @@ class RegistrationView extends TRComponent<Props, State> {
         return (
             <React.Fragment>
                 <Card>
-                    <CardHeader title="Register User"/>
+                    <CardHeader title={this.state.formHeading}/>
                     <form onSubmit={(event: any) => { this.onSubmit(event)}} noValidate>
                         <CardContent>
                             <Grid component="div" container spacing={3}>
                                 <Grid item xs={6} component="div"><TextField {...this.handleInputDataChange("firstName")} label="First Name" margin="normal" fullWidth /></Grid>
                                 <Grid item xs={6} component="div"><TextField {...this.handleInputDataChange("lastName")}  label="Last Name" margin="normal" fullWidth /></Grid>
                                 <Grid item xs={6} component="div"><TextField {...this.handleInputDataChange("email")} type="email" label="Email Address" margin="normal" fullWidth /></Grid>
-                                <Grid item xs={6} component="div"><TextField {...this.handleInputDataChange("password")} type="password" label="Password" margin="normal" fullWidth /></Grid>
+                                {
+                                    this.state.isEdit ? "" : (<Grid item xs={6} component="div"><TextField {...this.handleInputDataChange("password")} type="password" label="Password" margin="normal" fullWidth /></Grid>)
+                                }
                             </Grid>
                         </CardContent>
                         <CardActions>
                             <Grid container spacing={1} component="div" justify="flex-end">
                                 <Grid component="div" item xs={1}>
-                                    <Button size="small" color="primary" type="submit" fullWidth variant="contained" children="save"/></Grid>
+                                    <Button size="small" color="primary" type="submit" fullWidth variant="contained" children={this.state.buttonLabel}/></Grid>
                                 <Grid component="div" item xs={1}>
                                     <Button color="secondary" size="small" fullWidth variant="contained" children="Cancel" onClick={(event:any) => {TrUtil.gotoUrl(_this, UserUrlMapping.ui.list)}}/></Grid>
                             </Grid>

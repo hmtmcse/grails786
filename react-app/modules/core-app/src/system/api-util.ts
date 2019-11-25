@@ -72,6 +72,17 @@ export const ApiUtil = {
         }
     },
 
+    getParamsDataFromRouter(router: any, key: string) {
+        if (router && router.match && router.match.params && router.match.params[key]){
+            return router.match.params[key]
+        }
+        return null
+    },
+
+    isEmptyObject(obj: object): boolean {
+        return Object.keys(obj).length === 0
+    },
+
     processApiResponseAndShowError: (response: TRHTTResponse, component: any) =>{
         let apiResponse = ApiUtil.processApiResponse(response, component);
         if (apiResponse.status == AppConstant.STATUS_ERROR && apiResponse.error && apiResponse.error.message){
@@ -81,10 +92,19 @@ export const ApiUtil = {
             return apiResponse;
         }
     },
-
-    processApiResponseError: (responseData: any, component: any) =>{
-        if (responseData && responseData.status == AppConstant.STATUS_ERROR && responseData.error && responseData.error.fields.length !== 0){
+    showErrorMessageOnApiDataProcess(responseData: any, component: any){
+        if (responseData && responseData.status == AppConstant.STATUS_ERROR &&
+            responseData.error && responseData.error.message) {
+            component.showErrorFlash(responseData.error.message)
+        }
+    },
+    processApiResponseError: (responseData: any, component: any) => {
+        if (responseData && responseData.status == AppConstant.STATUS_ERROR &&
+            responseData.error && responseData.error.fields && responseData.error.fields.length !== 0) {
             component.validateApiResponseData(responseData.error.fields);
+            ApiUtil.showErrorMessageOnApiDataProcess(responseData, component);
+        } else {
+            ApiUtil.showErrorMessageOnApiDataProcess(responseData, component);
         }
     },
 
