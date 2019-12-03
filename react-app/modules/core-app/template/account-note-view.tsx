@@ -13,6 +13,7 @@ class State extends TRComponentState{}
 
 export default  class AccountNoteView extends TRComponent<Props, State> {
 
+    state: State = new State();
 
     renderUI() {
         return (
