@@ -51,6 +51,7 @@ export default class AuthenticationService {
                 name = " " + user.lastName
             }
             TRBrowserStorageManager.add("operatorName", name);
+            TRBrowserStorageManager.add("operatorId", user.id);
             TRBrowserStorageManager.addAsJSONString("apiData", responseData);
             return true;
         }
