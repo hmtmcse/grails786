@@ -1,6 +1,20 @@
 import {createStyles, Theme} from "react-mui-ui/ui/ui-component";
 
 const privateLayoutJSS = (theme: Theme) => createStyles({
+    '@global': {
+        '.MuiTableCell-head': {
+            color: '#000000',
+            height: 20
+        },
+        '.MuiTableHead-root': {
+            backgroundColor: '#DCDCDC',
+            height: 20
+        },
+        '.MuiTableCell-body': {
+            backgroundColor: 'white',
+            height: 20
+        },
+    },
     root: {
         display: 'flex',
     },
