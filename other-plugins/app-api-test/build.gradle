@@ -16,8 +16,17 @@ task('functionalTest', type: Test) {
     systemProperty 'com.athaydes.spockframework.report.outputDir', 'build/reports/spock'
 }
 
+def dependencyList = [
+        "grails-gs-rest-test",
+]
+
 dependencies {
-    compile project(":grails-gs-rest-test")
+    dependencyList.each {
+        if (findProject(":" + it)){
+            compile project(":" + it)
+        }
+    }
+
     testCompile 'com.athaydes:spock-reports:1.6.2', { transitive = false }
     testCompile 'org.slf4j:slf4j-api:1.7.28'
     testCompile 'org.slf4j:slf4j-simple:1.7.28'
