@@ -14,13 +14,15 @@ import {
     Typography, withStyles,
 } from "react-mui-ui/ui/ui-component";
 import TRTableHeader from "react-mui-ui/ui/tr-table-header";
-import {Align, TRTableHeaderDataHelper} from "react-mui-ui/ui/tr-ui-data";
+import {Align, TRTableActionData, TRTableActionDataHelper, TRTableHeaderDataHelper} from "react-mui-ui/ui/tr-ui-data";
 import {TrUtil} from "tm-react/src/artifacts/util/tr-util";
 import TRPagination from "react-mui-ui/ui/tr-pagination";
 import {ApiUtil} from "core-app/src/system/api-util";
 import SystemConfig from "core-app/src/system/system-config";
 import PackageUrlMapping from "./package-url-mapping";
 import {viewCommon} from "bl-ui-crm/src/assets/style-jss";
+import CaTableAction from "core-app/src/override/ca-table-action";
+import {AppConstant} from "core-app/src/system/app-constant";
 
 
 
@@ -31,8 +33,8 @@ interface Props extends TRProps {
     listViewData: { [key: string]: any };
 }
 
-const tableHeaderDefinition = TRTableHeaderDataHelper.init("First Name", "firstName", true, "First Name", Align.left);
-tableHeaderDefinition.add( "Last Name", "lastName", true, "Last Name", Align.left);
+const tableHeaderDefinition = TRTableHeaderDataHelper.init("Name", "name", true, "Name", Align.left);
+tableHeaderDefinition.add( "Price", "price", true, "Price", Align.left);
 
 
 
@@ -82,6 +84,52 @@ class PackageListView extends TRComponent<Props, State> {
         );
     }
 
+    delete(uuid: string){
+        let _this = this;
+        let commonConditions = {
+            where: {
+                equal: {
+                    uuid :  uuid
+                }
+            }
+        };
+        this.deleteJsonToApi(PackageUrlMapping.API.DELETE,  commonConditions,
+            {
+                callback(response: TRHTTResponse): void {
+                    let apiResponse = ApiUtil.processApiResponse(response, _this);
+                    if (apiResponse && apiResponse.status === AppConstant.STATUS_SUCCESS) {
+                        _this.showSuccessFlash("Successfully Deleted!");
+                        _this.loadData();
+                    }else{
+                        ApiUtil.processApiResponseError(apiResponse, _this);
+                    }
+                }
+            },
+            {
+                callback(response: TRHTTResponse): void {
+                    ApiUtil.processApiErrorResponse(response, _this);
+                }
+            }
+        );
+    }
+
+
+    tableActions(component: any, rowData: any): Map<string, TRTableActionData> {
+        let tableAction: TRTableActionDataHelper = TRTableActionDataHelper.start("Details", "");
+        tableAction.addAction("Edit").setCallbackData(rowData).setAction({
+            click(event: any, onClickData: any): void {
+                component.redirectWithData(PackageUrlMapping.ui.create + "/" + onClickData.uuid, {})
+            }
+        });
+
+        tableAction.addAction("Delete").setCallbackData(rowData).setAction({
+            click(event: any, onClickData: any): void {
+                component.delete(onClickData.uuid)
+            }
+        }).addConfirmation();
+
+        return tableAction.getMap()
+    }
 
     renderUI() {
         const {classes} = this.props;
@@ -96,7 +144,7 @@ class PackageListView extends TRComponent<Props, State> {
                         <div className={classes.displayInline}>
                             <TextField placeholder="search" name="search" onKeyUp={(event: any)=>{ApiUtil.search(event, _this, ["firstName", "lastName"])}}/>
                         </div>
-                        <Button className={classes.marginToLeft}  variant="contained" color="primary" onClick={(event:any) => {TrUtil.gotoUrl(_this, "#")}}>Create</Button>
+                        <Button className={classes.marginToLeft}  variant="contained" color="primary" onClick={(event:any) => {TrUtil.gotoUrl(_this, PackageUrlMapping.ui.create)}}>Create</Button>
                         <Button className={classes.marginToLeft}  variant="contained" color="primary" onClick={(event:any) => {this.loadData()}} >Reload</Button>
                     </div>
                 </Paper>
@@ -107,15 +155,15 @@ class PackageListView extends TRComponent<Props, State> {
                             actionColumnAlign={Align.right}
                             headers={tableHeaderDefinition.getHeaders()}
                             orderBy={this.state.orderBy}
-                            enableActionColumn={false}
                             sortDirection={this.state.sortDirection}/>
                         <TableBody>
                             {this.state.list.map((row: any, index:any) => (
-                                <TableRow key={index} hover tabIndex={-1}  onClick={(event:  any) => {
-                                    _this.redirectWithData(_this.props.listViewData.details + "/" + row.uuid, {})
-                                }}>
-                                    <TableCell align="left">{row.firstName}</TableCell>
-                                    <TableCell align="left">{row.lastName}</TableCell>
+                                <TableRow key={index} hover tabIndex={-1}>
+                                    <TableCell align="left">{row.name}</TableCell>
+                                    <TableCell align="left">{row.price}</TableCell>
+                                    <TableCell align="right">
+                                        <CaTableAction actions={this.tableActions(_this, row)}/>
+                                    </TableCell>
                                 </TableRow>
                             ))}
                         </TableBody>
