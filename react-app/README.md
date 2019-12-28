@@ -10,3 +10,10 @@
 ## How to pull all?
 1. cd scripts
 2. sh git_pull.sh
+
+
+# How to add Item?
+lerna add module-1 --scope=module-2
+
+
+Icon: https://material-ui.com/components/material-icons/
