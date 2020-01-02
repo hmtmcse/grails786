@@ -28,4 +28,5 @@ yarn-error.log
 package-lock.json
 modules/tm-react
 modules/react-mui-ui
+modules/react-material-app
 modules/bl-*
