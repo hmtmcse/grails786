@@ -1,0 +1,9 @@
+== Project Setup
+. Clone the root application using git bash or other git client ```git clone https://github.com/hmtmcse/grails786.git ```
+. Import the project Intellij IDEA or other IDE as a Gradle Project
+. Find the root directory *build.gradle* file and run the task *resolveDependencies*
+. Configure the database configuration projectRoot/Grails786/grails-app/conf/config/application.yml
+. Configure your pc as react application compatible.
+. cd react-app then run ```yarn install```
+. (For Intellij IDEA Select the Project Grails786) Run the Grails Project
+. cd react-app then run ```yarn start-app```
