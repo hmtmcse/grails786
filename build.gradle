@@ -16,13 +16,13 @@ buildscript {
 
 ext {
     grailsApps = ['GrailsEngine']
-    staticModule = ['application']
     isParentGradleConfig = true
     isApplicationModulesAvailable = false
 }
 
-Boolean isItPlugin(String pluginName){
-    return file("$grailsPluginDependencyPath").list().contains(pluginName) || file("$grailsApplicationModulesPath").list().contains(pluginName)
+Boolean isItPlugin(Project grailsProject){
+    String path = grailsProject.projectDir.toString()
+    return path && geGrailsModules && path.contains(geGrailsModules - "/")
 }
 
 String applicationModuleGradlePath = "${rootProject.projectDir}/$applicationModuleGradlePath"
@@ -33,9 +33,8 @@ if(new File(applicationModuleGradlePath).exists()) {
 
 
 subprojects { project ->
-
     boolean isGrailsApp = grailsApps.contains(project.name)
-    boolean isGrailsPlugin = isItPlugin(project.name) || staticModule.contains(project.name) || myPlugins().contains(project.name)
+    boolean isGrailsPlugin = isItPlugin(project)
     boolean isGrailsProject = isGrailsApp || isGrailsPlugin
 
     if ( isGrailsProject ) {

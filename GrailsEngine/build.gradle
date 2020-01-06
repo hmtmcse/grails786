@@ -6,26 +6,33 @@ group "com.hmtmcse.application"
 apply from: "${rootProject.projectDir}/gradle/codenarc.gradle"
 
 // Grails Plugin Dependency
-String grailsPluginPath = "${rootProject.projectDir}/$grailsPluginDependencyPath"
-File grailsPlugin = file(grailsPluginPath)
+String geEngineModulesPath = "${rootProject.projectDir}/${geEngineModules}${geGrailsModules}"
+File engineGrailsModule = file(geEngineModulesPath)
+
+String applicationModulesPath = "${rootProject.projectDir}/${geApplicationModules}"
+File applicationModule = file(applicationModulesPath)
 
 grails {
     plugins {
-        if(project.isApplicationModulesAvailable) {
-            myPlugins().each {
-                println("Added Application Plugin: ${it}")
-                compile project(":${it}")
-            }
-        }
-
-        if (grailsPlugin.exists()){
-            grailsPlugin.list().each {
-                if(it != "empty" && it != "my-plugin"){
+        if (engineGrailsModule.exists()){
+            engineGrailsModule.list().each {
+                if(it != "empty"){
                     println("Added Grails Plugin: ${it}")
                     compile project(":${it}")
                 }
             }
         }
+
+
+        if (applicationModule.exists()){
+            applicationModule.list().each {
+                if(it != "empty"){
+                    println("Added Grails Plugin: ${it}")
+                    compile project(":${it}")
+                }
+            }
+        }
+
 
     }
 }
