@@ -17,22 +17,26 @@ grails {
         if (engineGrailsModule.exists()){
             engineGrailsModule.list().each {
                 if(it != "empty"){
-                    println("Added Grails Plugin: ${it}")
+                    println("Grails Engine Module Added: ${it}")
                     compile project(":${it}")
                 }
             }
+            println("\n---------------------------------------------------------------\n")
         }
 
 
         if (applicationModule.exists()){
-            applicationModule.list().each {
-                if(it != "empty"){
-                    println("Added Grails Plugin: ${it}")
-                    compile project(":${it}")
+            applicationModule.listFiles().each { am ->
+                if(am.name != "empty" && am.isDirectory() && new File("${am.absolutePath}/${geGrailsModules}").exists()){
+                    new File("${am.absolutePath}/${geGrailsModules}").listFiles().each { m ->
+                        if (m.name != "empty" && m.isDirectory() && m.absolutePath && m.absolutePath.contains(geGrailsModules - "/")){
+                            println("Application Module Added: ${m.name}")
+                            compile project(":${m.name}")
+                        }
+                    }
                 }
             }
         }
-
 
     }
 }

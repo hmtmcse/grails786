@@ -8,7 +8,7 @@ def includeProjects(String rootPath) {
             "${geModules}",
             "${geGrailsModules}",
     ].each { mod ->
-        modulePath = "${rootPath}${mod}/"
+        modulePath = "${rootPath}${mod}"
         modulePathFile = file(modulePath)
         if (modulePathFile.exists()) {
             modulePathFile.list().each { name ->
@@ -27,7 +27,7 @@ File geApplicationModulesPath = file(geApplicationModules)
 if (geApplicationModulesPath.exists()){
     geApplicationModulesPath.list().each {
         if(it != "empty"){
-            includeProjects("${geApplicationModules}${it}")
+            includeProjects("${geApplicationModules}${it}/")
         }
     }
 }
