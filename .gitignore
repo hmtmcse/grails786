@@ -16,5 +16,9 @@ node_modules
 engine-modules/user-interface/react-material-app
 engine-modules/user-interface/tm-react
 engine-modules/user-interface/react-mui-ui
+engine-modules/grails-modules
+engine-modules/modules
+!engine-modules/modules/app-api-test
+!engine-modules/modules/codenarc-rule
 *-lock.json
 *.lock
