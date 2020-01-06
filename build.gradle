@@ -15,7 +15,7 @@ buildscript {
 
 
 ext {
-    grailsApps = ['Grails786']
+    grailsApps = ['GrailsEngine']
     staticModule = ['application']
     isParentGradleConfig = true
     isApplicationModulesAvailable = false
@@ -163,11 +163,14 @@ subprojects { project ->
 
 
 
-// Grails Plugin Dependency
+// Grails Engine Dependency
+String grailsModules = "${geEngineModules}${geGrailsModules}"
+String javaGroovyModules = "${geEngineModules}${geModules}"
+String userInterface = "${geEngineModules}${geUserInterface}"
 def projectDependencies = [
         [
-                "name": "Grails Plugins",
-                "destination": grailsPluginDependencyPath,
+                "name": "Grails Modules",
+                "destination": grailsModules,
                 "dependencies" : [
                         "grails-swagger": "https://github.com/hmtmcse/grails-swagger.git",
                         "grails-auth": "https://github.com/hmtmcse/grails-auth.git",
@@ -176,16 +179,16 @@ def projectDependencies = [
                 ]
         ],
         [
-                "name": "Grails Others Plugins",
-                "destination": otherPluginPath,
+                "name": "Java Groovy Modules",
+                "destination": javaGroovyModules,
                 "dependencies" : [
                         "java-date-time-util" : "https://github.com/hmtmcse/java-date-time-util.git",
                         "java-crypto-and-auth" : "https://github.com/hmtmcse/java-crypto-and-auth.git",
                 ]
         ],
         [
-                "name": "UI Applications",
-                "destination": uiModulePath,
+                "name": "User Interface",
+                "destination": userInterface,
                 "dependencies" : [
                         "tm-react" : "https://github.com/hmtmcse/tm-react.git",
                         "react-mui-ui" : "https://github.com/hmtmcse/react-mui-ui.git",

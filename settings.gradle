@@ -1,51 +1,34 @@
-rootProject.name = 'Grails786'
-include 'Grails786'
+rootProject.name = 'GrailsEngine'
+include 'GrailsEngine'
 
-
-
-// Grails Plugin Dependency
-String grailsPluginPath = "$grailsPluginDependencyPath"
-File grailsPlugin = file(grailsPluginPath)
-if (grailsPlugin.exists()){
-    grailsPlugin.list().each {
-        if(it != "empty" && it != "my-plugin"){
-            include(it)
-            project(":${it}").projectDir = file( grailsPluginPath + it)
+def includeProjects(String rootPath) {
+    String modulePath
+    File modulePathFile
+    [
+            "${geModules}",
+            "${geGrailsModules}",
+    ].each { mod ->
+        modulePath = "${rootPath}${mod}/"
+        modulePathFile = file(modulePath)
+        if (modulePathFile.exists()) {
+            modulePathFile.list().each { name ->
+                if (name != "empty") {
+                    include(name)
+                    project(":${name}").projectDir = file(modulePath + name)
+                }
+            }
         }
     }
 }
+includeProjects("${geEngineModules}")
 
 
-// Application Module
-String applicationModule = "$grailsApplicationModulesPath"
-String applicationModuleGradlePath = "$applicationModuleGradlePath"
-if(new File(applicationModuleGradlePath).exists()) {
-    apply from: applicationModuleGradlePath
-    myPlugins().each {
-        include(it)
-        project(":${it}").projectDir = file( applicationModule + it)
-    }
-}
-
-
-Map notIncludeOnSetup = [
-        "app-api-test": "app-api-test",
-        "grails-gs-rest-test": "grails-gs-rest-test",
-        "java-text-and-file-util": "java-text-and-file-util",
-        "java-http-util": "java-http-util",
-]
-
-// Other Plugin
-String notInclude = "$notInclude"
-File otherPlugins = file("$otherPluginPath")
-if (otherPlugins.exists()){
-    otherPlugins.list().each {
-        if (notInclude == "true" && notIncludeOnSetup[it]){
-            return
-        }
+File geApplicationModulesPath = file(geApplicationModules)
+if (geApplicationModulesPath.exists()){
+    geApplicationModulesPath.list().each {
         if(it != "empty"){
-            include(it)
-            project(":${it}").projectDir = file( "$otherPluginPath" + it)
+            includeProjects("${geApplicationModules}${it}")
         }
     }
 }
+
