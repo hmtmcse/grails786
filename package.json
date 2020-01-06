@@ -1,0 +1,21 @@
+{
+  "name": "react-lerna",
+  "version": "1.0.0",
+  "description": "Grails Engine",
+  "main": "index.js",
+  "repository": "https://github.com/hmtmcse/grails-engine.git",
+  "author": "Touhid Mia <hmtm.cse@gmail.com>",
+  "license": "MIT",
+  "private": true,
+  "workspaces": [
+    "engine-modules/user-interface/*"
+  ],
+  "scripts": {
+    "start-rma": "lerna run start-rma --stream",
+    "start-my-app": "lerna run start-my-app --stream"
+  },
+  "devDependencies": {
+    "lerna": "^3.15.0",
+    "webpack-cli": "^3.3.6"
+  }
+}
