@@ -1,6 +1,12 @@
 #!/bin/bash
 
-git clone --branch new-structure https://github.com/hmtmcse/grails786.git grails-engine
-cd grails-engine
+PROJECT_DIR="grails-engine"
+echo "Cloning Project from git hub"
+git clone --branch new-structure https://github.com/hmtmcse/grails786.git "$PROJECT_DIR"
+cd "$PROJECT_DIR"
+
+echo "Resolving Project Dependency"
 bash gradlew resolveDependencies
+
+echo "Installing React Material App (RMA) Dependency"
 yarn install
