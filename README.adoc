@@ -8,3 +8,6 @@
 . Run ```yarn install```
 . (For Intellij IDEA Select the Project GrailsEngine) Run the Grails Project
 . For Start UI run ```yarn start-rma```
+
+
+
