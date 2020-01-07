@@ -1,7 +1,7 @@
 #!/bin/bash
 
 PROJECT_DIR="grails-engine"
-echo "Cloning Project from git hub"
+echo "Cloning Project from GitHub"
 git clone --branch new-structure https://github.com/hmtmcse/grails786.git "$PROJECT_DIR"
 cd "$PROJECT_DIR"
 
