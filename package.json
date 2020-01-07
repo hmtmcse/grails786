@@ -14,7 +14,7 @@
     "start-rma": "lerna run start-rma --stream",
     "build-rma": "lerna run build-rma --stream",
     "start-my-app": "lerna run start-my-app --stream",
-    "build-my-app": "lerna run build-my-app --stream",
+    "build-my-app": "lerna run build-my-app --stream"
   },
   "devDependencies": {
     "lerna": "^3.15.0",
