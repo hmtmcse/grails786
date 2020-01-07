@@ -1,15 +1,6 @@
-#grails:
-#  gorm:
-#    multiTenancy:
-#      mode: DATABASE
-#      tenantResolverClass: com.webcommander.saas.TenantIdResolver
-#    reactor:
-#      events: false
-
-
 dataSource:
   driverClassName: com.mysql.cj.jdbc.Driver
   username: root
   password: ""
   dbCreate: update
-  url: "jdbc:mysql://localhost/grails_786?useUnicode=yes&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC"
+  url: "jdbc:mysql://localhost/grails_engine?useUnicode=yes&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC"
