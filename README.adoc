@@ -1,5 +1,5 @@
 == Project Setup
-. Run this following script into your bash ```curl https://raw.githubusercontent.com/hmtmcse/grails786/master/bismillah.sh -o bismillah.sh && bash bismillah.sh``
+. Run this following script into your bash ```curl https://raw.githubusercontent.com/hmtmcse/grails786/ew-structure/bismillah.sh -o bismillah.sh && bash bismillah.sh```
 . Clone the root application using git bash or other git client ```git clone https://github.com/hmtmcse/grails786.git ```
 . Import the project Intellij IDEA or other IDE as a Gradle Project
 . Find the root directory *build.gradle* file and run the task *resolveDependencies*
