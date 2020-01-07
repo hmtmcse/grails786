@@ -20,7 +20,7 @@ ext {
     isApplicationModulesAvailable = false
 }
 
-Boolean isItPlugin(Project grailsProject){
+Boolean isItPlugin(def grailsProject){
     String path = grailsProject.projectDir.toString()
     return path && geGrailsModules && path.contains(geGrailsModules - "/")
 }
