@@ -31,6 +31,11 @@ if(new File(applicationModuleGradlePath).exists()) {
     project.isApplicationModulesAvailable = true
 }
 
+allprojects {
+    apply plugin: 'java'
+    apply plugin: 'groovy'
+    apply plugin: 'idea'
+}
 
 subprojects { project ->
     boolean isGrailsApp = grailsApps.contains(project.name)
