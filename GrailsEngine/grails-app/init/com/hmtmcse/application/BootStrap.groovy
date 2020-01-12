@@ -11,7 +11,6 @@ class BootStrap {
         GsConfigHolder.hostnameWithPort = "${TMGUtil.appBaseUrlHostWithPort()}"
         GsConfigHolder.systemVersion = "V2"
         GsConfigHolder.swaggerDefinitionUrl = "${ApplicationConfig.appBaseUrl()}swaggerUi/definition"
-        AppWebSocketHandler.init(servletContext)
         println("Bismillah")
     }
 
