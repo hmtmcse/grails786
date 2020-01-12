@@ -12,9 +12,6 @@ File engineGrailsModule = file(geEngineModulesPath)
 String applicationModulesPath = "${rootProject.projectDir}/${geApplicationModules}"
 File applicationModule = file(applicationModulesPath)
 
-dependencies {
-    compile group: 'javax.websocket', name: 'javax.websocket-api', version: '1.1'
-}
 
 grails {
     plugins {
