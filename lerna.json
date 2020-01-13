@@ -1,6 +1,7 @@
 {
   "packages": [
-    "engine-modules/user-interface/*"
+    "engine-modules/user-interface/*",
+    "application-modules/*/user-interface/*"
   ],
   "version": "0.0.0"
 }

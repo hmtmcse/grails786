@@ -8,7 +8,8 @@
   "license": "MIT",
   "private": true,
   "workspaces": [
-    "engine-modules/user-interface/*"
+    "engine-modules/user-interface/*",
+    "application-modules/*/user-interface/*"
   ],
   "scripts": {
     "start-rma": "lerna run start-rma --stream",
